@@ -22,11 +22,6 @@ button{font:inherit}
 :focus-visible{outline:2px solid #0066cc;outline-offset:3px;border-radius:6px}
 .in{max-width:1320px;margin:0 auto;padding-left:24px;padding-right:24px}
 
-/* 背景：作品の色が白に滲む */
-#bg{position:fixed;inset:0;z-index:-1;overflow:hidden;background:#fff}
-#bg div{position:absolute;inset:-12%;background-size:cover;background-position:center;filter:blur(90px) saturate(1.5);opacity:0;transition:opacity 1.4s ease}
-#bg div.on{opacity:.5}
-
 header{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.55);-webkit-backdrop-filter:saturate(180%) blur(24px);backdrop-filter:saturate(180%) blur(24px)}
 .bar{display:flex;align-items:center;justify-content:space-between;height:56px}
 .name{font-size:17px;font-weight:600;letter-spacing:-.01em;display:flex;align-items:center;gap:10px}
@@ -58,7 +53,6 @@ header{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.55);-webkit
 .work:hover .tri .thumb img{transform:scale(1.12)}
 /* 縦型1本：左右は同じ画像のぼかしで埋める */
 .thumb.vfit{display:flex;justify-content:center}
-.thumb.vfit::before{content:"";position:absolute;inset:-30px;background:var(--bgimg) center/cover;filter:blur(36px) saturate(1.4)}
 .thumb.vfit img{position:relative;width:auto;height:100%;aspect-ratio:9/16}
 
 /* 詳細 */
@@ -69,17 +63,17 @@ header{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.55);-webkit
 .nat img{height:auto}
 .nat.ph{aspect-ratio:16/9;background:var(--card)}
 /* 縦型動画のステージ */
-.stage{position:relative;height:var(--sh);overflow:hidden;background:#e9e9ec;display:flex;align-items:center;justify-content:center;gap:28px}
-.sbg{position:absolute;inset:-60px;filter:blur(44px) saturate(1.5)}
-.sbg img{position:absolute;left:50%;top:50%;height:100%;object-fit:cover}
-.sbox{position:relative;flex:none;border-radius:var(--r);overflow:hidden;background:#000;box-shadow:0 24px 60px rgba(0,0,0,.2)}
-.sbox.v{height:calc(var(--sh) - 64px);aspect-ratio:9/16;max-width:calc(100% - 200px)}
-.sbox.h{width:min(calc(100% - 200px),calc((var(--sh) - 64px)*1.7778));aspect-ratio:16/9}
-.arw{flex:none;z-index:2;width:44px;height:44px;border-radius:50%;border:0;background:rgba(255,255,255,.72);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);color:var(--ink);display:grid;place-items:center;cursor:pointer;box-shadow:0 1px 8px rgba(0,0,0,.18);transition:background .2s,transform .2s}
+.stage{position:relative;height:var(--sh);background:#e9e9ec;overflow:hidden}
+.sin{position:relative;height:100%;max-width:1320px;margin:0 auto;display:flex;align-items:center;justify-content:center}
+.sbox{position:relative;flex:none;border-radius:var(--r);overflow:hidden;background:#000}
+.sbox.v{height:calc(var(--sh) - 72px);aspect-ratio:9/16;max-width:calc(100% - 200px)}
+.sbox.h{width:min(calc(100% - 200px),calc((var(--sh) - 72px)*1.7778));aspect-ratio:16/9}
+.arw{position:absolute;top:50%;margin-top:-22px;z-index:2;width:44px;height:44px;border-radius:50%;border:0;background:rgba(255,255,255,.85);color:var(--ink);display:grid;place-items:center;cursor:pointer;transition:background .2s,transform .2s}
+.arw.p{left:24px}.arw.n{right:24px}
 .arw:hover{background:#fff;transform:scale(1.06)}
-.dots{position:absolute;left:0;right:0;bottom:18px;display:flex;gap:8px;justify-content:center;z-index:2}
-.dot{width:8px;height:8px;border-radius:50%;border:0;padding:0;background:rgba(29,29,31,.3);cursor:pointer}
-.dot.on{background:var(--ink)}
+.dots{position:absolute;left:0;right:0;bottom:20px;display:flex;gap:6px;justify-content:center;z-index:2}
+.dot{width:30px;height:6px;border-radius:3px;border:0;padding:0;background:rgba(29,29,31,.22);cursor:pointer;transition:width .35s ease,background .35s ease}
+.dot.on{width:58px;background:rgba(29,29,31,.72)}
 
 .head{padding-top:56px}
 .head h1{font-weight:400;font-size:clamp(28px,3vw,42px);line-height:1.45;letter-spacing:.01em;margin:0 0 26px}
@@ -115,8 +109,7 @@ footer a{color:var(--ink)}
   .in{padding-left:18px;padding-right:18px}
   .ab{grid-template-columns:1fr;gap:40px}
   .head{padding-top:40px}
-  .stage{gap:0}
-  .arw{position:absolute;top:50%;margin-top:-18px;width:36px;height:36px}
+  .arw{margin-top:-18px;width:36px;height:36px}
   .arw.p{left:8px}.arw.n{right:8px}
   .sbox.v{max-width:calc(100% - 36px)}.sbox.h{width:calc(100% - 24px)}
 }
@@ -124,7 +117,6 @@ footer a{color:var(--ink)}
 </style>
 </head>
 <body>
-<div id="bg" aria-hidden="true"></div>
 
 <header><div class="in bar">
   <a class="name" href="#/works" aria-label="作品一覧へ"><span id="arr" hidden>←</span>武井 優空</a>
@@ -178,7 +170,7 @@ var WORKS=[
  {id:'kamon',tags:['Film'],title:'紋の拍動',thumbs:['images/kamon.jpg'].concat(YT('KuNj9hDmbv4')),yt:['KuNj9hDmbv4'],
   desc:'家紋の魅力を「構造美」という視点から再解釈した映像作品。家紋を構成する円の大きさに音階と色を対応させ、描かれる過程そのものを視覚と音楽で表現しました。説明するのではなく、体験として美しさを伝えることを目指しています。',
   more:[{t:'スライド資料を見る',u:'https://app.notion.com/p/3abf11d2bbc881ada44fc77e52061bc8'}]},
- {id:'matte',tags:['Film'],title:'少々お待ちください',thumbs:['images/matte.jpg'].concat(YT('pvjiZf0boLU')),yt:['pvjiZf0boLU'],
+ {id:'matte',tags:['Film'],title:'少々お待ちください',thumbs:['images/matte.jpg'].concat(YT('pvjiZf0boLU')),vertical:true,yt:[{id:'pvjiZf0boLU',v:1}],
   desc:'「20年後のディストピアとは」がテーマ。高速通信で加速した人々の体感速度は、その反動もまた大きくなる。広告や読み込み画面など、誰もが経験する待ち時間を起点に未来を描きました。'},
  {id:'anime',tags:['Animation'],title:'自主制作アニメ',tri:true,stage:true,
   yt:[{id:'LvcPt6-EepM',v:1},{id:'-zzhnsR7fpo',v:1},{id:'19V8c5Xz9HE'}],
@@ -193,18 +185,10 @@ var WORKS=[
 
 /* ===== 以下は表示の仕組み ===== */
 var $=function(s){return document.querySelector(s)};
-var $list=$('#list'),$home=$('#home'),$d=$('#detail'),$ab=$('#about'),$bg=$('#bg'),$arr=$('#arr');
-var BG=[],want=0,view='home',lastY=0;
+var $list=$('#list'),$home=$('#home'),$d=$('#detail'),$ab=$('#about'),$arr=$('#arr');
+var view='home',lastY=0;
 function jump(y){window.scrollTo({top:y||0,left:0,behavior:'instant'})}
 
-function setBg(i){
-  want=i; BG.forEach(function(d){d&&d.classList.remove('on')});
-  var d=BG[i]||BG.filter(Boolean)[0]; if(d) d.classList.add('on');
-}
-function addBg(i,src,v){
-  if(BG[i]) return; var d=document.createElement('div');
-  d.style.backgroundImage='url("'+src+'")'; if(v) d.style.backgroundSize='320% auto'; $bg.appendChild(d); BG[i]=d; setBg(want);
-}
 /* 画像を順に試し、全部だめならグレーの枠にする */
 function img(srcs,label,alt,cls,ok){
   var box=document.createElement('div'); box.className='thumb'+(cls?' '+cls:'');
@@ -219,17 +203,13 @@ function norm(y){return typeof y==='string'?{id:y}:y}
 
 /* 一覧のサムネ */
 function cardThumb(w,i){
-  var first=function(s){addBg(i,s,w.tri||w.vertical)};
   if(w.tri){
     var box=document.createElement('div'); box.className='thumb tri';
-    w.yt.forEach(function(y,k){ var c=img(ytSrcs(y.id,'images/'+w.id+'-'+(k+1)+'.jpg'),'','','',k===0?first:null); c.dataset.i=k; box.appendChild(c) });
+    w.yt.forEach(function(y,k){ var c=img(ytSrcs(y.id,'images/'+w.id+'-'+(k+1)+'.jpg'),'',''); c.dataset.i=k; box.appendChild(c) });
     return box;
   }
-  if(w.vertical){
-    var b=img(w.thumbs,w.title,'','vfit',function(s){first(s); b.style.setProperty('--bgimg','url("'+s+'")')});
-    return b;
-  }
-  return img(w.thumbs,w.title,'','',first);
+  if(w.vertical) return img(w.thumbs,w.title,'','vfit');
+  return img(w.thumbs,w.title,'');
 }
 WORKS.forEach(function(w,i){
   var a=document.createElement('a'); a.className='work'; a.href='#/'+w.id;
@@ -238,14 +218,6 @@ WORKS.forEach(function(w,i){
   a.appendChild(m); a.appendChild(cardThumb(w,i)); $list.appendChild(a);
 });
 
-var tick=false;
-function pick(){
-  tick=false; if(view!=='home') return;
-  var els=document.querySelectorAll('.work'),mid=innerHeight/2,best=0,bd=1e9;
-  els.forEach(function(e,i){var r=e.getBoundingClientRect(),d=Math.abs(r.top+r.height/2-mid); if(d<bd){bd=d;best=i}});
-  setBg(best);
-}
-addEventListener('scroll',function(){if(!tick){tick=true;requestAnimationFrame(pick)}},{passive:true});
 
 /* 詳細：横型の動画 */
 function ytBox(id){
@@ -260,22 +232,18 @@ var ARW={p:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="
 function buildStage(w,start){
   var items=w.yt.map(norm),n=items.length,cur=0,dots=[];
   var st=document.createElement('div'); st.className='stage';
-  var bg=document.createElement('div'); bg.className='sbg'; var bi=new Image(); bi.alt=''; bg.appendChild(bi);
+  var sin=document.createElement('div'); sin.className='sin'; st.appendChild(sin);
   var box=document.createElement('div'); box.className='sbox';
-  st.appendChild(bg);
   function arrow(k,label,d){ var b=document.createElement('button'); b.className='arw '+k; b.innerHTML=ARW[k]; b.setAttribute('aria-label',label); b.onclick=function(){step(d)}; return b }
-  if(n>1) st.appendChild(arrow('p','前の動画',-1));
-  st.appendChild(box);
-  if(n>1) st.appendChild(arrow('n','次の動画',1));
+  sin.appendChild(box);
   if(n>1){
+    sin.appendChild(arrow('p','前の動画',-1)); sin.appendChild(arrow('n','次の動画',1));
     var dw=document.createElement('div'); dw.className='dots';
     items.forEach(function(y,i){ var d=document.createElement('button'); d.className='dot'; d.setAttribute('aria-label',(i+1)+'本目の動画'); d.onclick=function(){show(i,true)}; dots.push(d); dw.appendChild(d) });
-    st.appendChild(dw);
+    sin.appendChild(dw);
   }
   function show(i,auto){
     cur=((i%n)+n)%n; var y=items[cur];
-    bi.style.aspectRatio=y.v?'9/16':'16/9'; bi.style.transform='translate(-50%,-50%) scale('+(y.v?4.4:2)+')';
-    bi.src='https://i.ytimg.com/vi/'+y.id+'/hqdefault.jpg';
     box.className='sbox '+(y.v?'v':'h');
     box.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+y.id+'?rel=0'+(auto?'&autoplay=1':'')+'" title="動画 '+(cur+1)+'" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';
     dots.forEach(function(d,k){d.classList.toggle('on',k===cur)});
@@ -294,16 +262,16 @@ addEventListener('keydown',function(e){
 
 function showHome(){
   var was=view; view='home'; $arr.hidden=true; $home.hidden=false; $d.hidden=true; $ab.hidden=true; document.title='武井優空 | Portfolio';
-  jump(was==='home'?0:lastY); pick();
+  jump(was==='home'?0:lastY);
 }
 function showAbout(){
   if(view==='home') lastY=scrollY; view='about'; $arr.hidden=false;
-  $home.hidden=true; $d.hidden=true; $ab.hidden=false; document.title='about | 武井優空'; setBg(0); jump(0);
+  $home.hidden=true; $d.hidden=true; $ab.hidden=false; document.title='about | 武井優空'; jump(0);
 }
 function showWork(idx,start){
   STAGE=null;
   var w=WORKS[idx],prev=WORKS[(idx+WORKS.length-1)%WORKS.length],next=WORKS[(idx+1)%WORKS.length];
-  if(view==='home') lastY=scrollY; view='detail'; $arr.hidden=false; $home.hidden=true; $ab.hidden=true; $d.hidden=false; $d.innerHTML=''; setBg(idx);
+  if(view==='home') lastY=scrollY; view='detail'; $arr.hidden=false; $home.hidden=true; $ab.hidden=true; $d.hidden=false; $d.innerHTML='';
   document.title=w.title+' | 武井優空';
   var rest=[];
   if(w.stage||w.vertical){ $d.appendChild(buildStage(w,start)) }
