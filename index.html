@@ -60,7 +60,8 @@ header{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.55);-webkit
 .col{max-width:948px;margin:0 auto;padding-left:24px;padding-right:24px}
 .top{padding-top:32px}
 .yt{position:relative;aspect-ratio:16/9;border-radius:var(--r);overflow:hidden;background:#000}
-.yt iframe,.sbox iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.yt iframe,.sbox iframe,.yt video,.sbox video{position:absolute;inset:0;width:100%;height:100%;border:0}
+.yt video,.sbox video{object-fit:contain;background:#000}
 .nat{aspect-ratio:auto;background:none}
 .nat img{height:auto}
 .nat.ph{aspect-ratio:16/9;background:var(--card)}
@@ -222,11 +223,14 @@ WORKS.forEach(function(w,i){
 
 
 /* 詳細：横型の動画 */
-function ytBox(id){
-  var d=document.createElement('div'); d.className='yt';
-  d.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+id+'?rel=0" title="動画" loading="lazy" allow="encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';
-  return d;
+/* 動画の入れ方：videos フォルダに mp4 があればそれを再生し、無ければYouTubeを表示 */
+function fill(el,file,id,label,auto){
+  var v=document.createElement('video'); v.controls=true; v.playsInline=true; v.preload='metadata'; v.setAttribute('aria-label',label);
+  if(auto) v.autoplay=true;
+  v.onerror=function(){ el.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+id+'?rel=0'+(auto?'&autoplay=1':'')+'" title="'+label+'" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>' };
+  v.src=file; el.innerHTML=''; el.appendChild(v);
 }
+function ytBox(w){ var d=document.createElement('div'); d.className='yt'; fill(d,'videos/'+w.id+'.mp4',w.yt[0],w.title,false); return d }
 /* 詳細：縦型を含む動画。背景は動画のぼかし。余白の矢印・下の点・キー・スワイプで移動 */
 var STAGE=null;
 var ARW={p:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 5.5 8 12l6.5 6.5"/></svg>',
@@ -248,7 +252,7 @@ function buildStage(w,start){
   function show(i,auto){
     cur=((i%n)+n)%n; var y=items[cur];
     box.className='sbox '+(y.v?'v':'h');
-    box.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+y.id+'?rel=0'+(auto?'&autoplay=1':'')+'" title="動画 '+(cur+1)+'" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';
+    fill(box,y.file||('videos/'+w.id+(n>1?'-'+(cur+1):'')+'.mp4'),y.id,w.title+' '+(cur+1),auto);
     dots.forEach(function(d,k){d.classList.toggle('on',k===cur)});
   }
   function step(d){show(cur+d,true)}
@@ -278,7 +282,7 @@ function showWork(idx,start){
   document.title=w.title+' | 武井優空';
   var rest=[];
   if(w.stage||w.vertical){ $d.appendChild(buildStage(w,start)) }
-  else if(w.yt){ var fb=document.createElement('div'); fb.className='col top'; fb.appendChild(ytBox(w.yt[0])); $d.appendChild(fb) }
+  else if(w.yt){ var fb=document.createElement('div'); fb.className='col top'; fb.appendChild(ytBox(w)); $d.appendChild(fb) }
   else if(w.imgs){ var f2=document.createElement('div'); f2.className='col top'; f2.appendChild(img([w.imgs[0]],'画像 1',w.title,'nat')); $d.appendChild(f2); rest=w.imgs.slice(1) }
   var head=document.createElement('div'); head.className='col head';
   head.innerHTML='<h1></h1>'+(w.desc?'<p></p>':'')+'<div class="tags">'+pills(w.tags)+'</div>';
