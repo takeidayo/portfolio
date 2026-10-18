@@ -9,6 +9,118 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
+/* ==========================================================================
+   ★★★ 見た目の調整パネル（ここの数字だけ変えれば、だいたい直せます）★★★
+
+   ・「パソコン」の数字 … 下の :root { } の中
+   ・「iPhone」の数字  … そのすぐ下の @media { } の中（同じ名前の数字を別に持っています）
+   ・数字の後ろの px はそのまま残す。  例）16px → 18px
+   ・px が付かない数字（行間 2 など）は「文字の大きさの何倍か」です。
+   ・変えたら保存 → 30秒待つ → ブラウザで再読み込み。
+   ========================================================================== */
+:root{
+  /* ── 一覧ページ（サムネが並ぶ画面） ── */
+  --list-gap:clamp(40px,6vw,88px);   /* 作品と作品のあいだの縦の空き。大きいほど広い */
+  --list-caption-top:10px;            /* サムネ画像と、その下の作品名とのあいだ */
+  --list-title-size:17px;             /* サムネ下の作品名の大きさ */
+  --list-title-weight:500;            /* 作品名の太さ（400=ふつう 500=やや太い 700=太い） */
+  --list-cat-size:12px;               /* 作品名の横の分類（Film など）の大きさ */
+
+  /* ── 詳細ページ：全体の余白 ── */
+  --side:24px;                        /* 左右の余白。映像・タイトル・本文の左右がこの幅だけ空く */
+  --media-top:32px;                   /* 上のヘッダーと、映像とのあいだ */
+  --media-to-title:40px;              /* 映像と、作品タイトルとのあいだ */
+
+  /* ── 詳細ページ：作品タイトル ── */
+  --d-title-size:clamp(22px,2.6vw,32px); /* タイトルの大きさ */
+  --d-title-weight:500;               /* タイトルの太さ */
+  --d-title-lh:1.3;                   /* タイトルの行間（文字の何倍か） */
+  --d-title-ls:-.02em;                /* タイトルの字間。マイナスで詰まる */
+  --title-to-text:18px;               /* タイトルと説明文とのあいだ */
+
+  /* ── 詳細ページ：説明文 ── */
+  --text-size:16px;                   /* 説明文の文字の大きさ */
+  --text-lh:2;                        /* 説明文の行間（文字の何倍か。1.8〜2.4が目安） */
+  --text-weight:400;                  /* 説明文の太さ */
+  --text-ls:0em;                      /* 説明文の字間。.02em で少し広がる */
+  --text-width:38em;                  /* 説明文の横幅の上限。none にすると目いっぱい */
+  --text-color:#1d1d1f;               /* 説明文の色 */
+
+  /* ── 詳細ページ：分類タブ（Film など） ── */
+  --tags-top:24px;                    /* 説明文と、分類タブとのあいだ */
+  --tag-gap:8px;                      /* タブとタブのあいだ */
+  --tag-size:13px;                    /* タブの文字の大きさ */
+  --tag-pad:1px 13px;                 /* タブの内側の余白（上下 左右）。4つ書くと 上 右 下 左 */
+  --tag-radius:999px;                 /* タブの角の丸さ。999px=まるいカプセル、8px=角ばる */
+  --tag-bg:#f0f0f3;                   /* タブの背景色 */
+  --tag-color:#707075;                /* タブの文字色 */
+  --tag-lh:1.7;                       /* タブの文字の上下の空き */
+
+  /* ── 詳細ページ：「+ 詳細を開く」 ── */
+  --more-size:14px;                   /* 文字の大きさ */
+  --more-weight:400;                  /* 文字の太さ */
+  --more-color:#e0301e;               /* 文字の色（赤） */
+  --more-right:0px;                   /* 右端からの距離。大きくすると左に寄る */
+  --more-list-size:14px;              /* 「詳細を開く」を押して出るリンクの文字の大きさ */
+
+  /* ── 詳細ページ：いちばん下（前へ／次へ） ── */
+  --after-tags:0px;                   /* タブと、下の線とのあいだ（余白を足す） */
+  --pn-top:72px;                      /* 下の線の上の余白 */
+  --pn-bottom:0px;                    /* 前へ／次へ の下の余白 */
+  --pn-size:14px;                     /* 前へ／次へ の文字の大きさ */
+}
+@media(max-width:760px){
+  :root{
+    /* ↓ iPhone 用の数字。意味は上と同じです */
+    --list-gap:40px;
+    --list-caption-top:10px;
+    --list-title-size:17px;
+    --list-title-weight:500;
+    --list-cat-size:12px;
+
+    --side:10px;
+    --media-top:14px;
+    --media-to-title:50px;
+
+    --d-title-size:24px;
+    --d-title-weight:500;
+    --d-title-lh:1;
+    --d-title-ls:0em;
+    --title-to-text:20px;
+
+    --text-size:10px;
+    --text-lh:2.3;
+    --text-weight:500;
+    --text-ls:0em;
+    --text-width:none;
+    --text-color:#1d1d1f;
+
+    --tags-top:14px;
+    --tag-gap:5px;
+    --tag-size:8px;
+    --tag-pad:5px 8px 4px;
+    --tag-radius:8px;
+    --tag-bg:#f0f0f0;
+    --tag-color:#a0a0a0;
+    --tag-lh:1;
+
+    --more-size:8px;
+    --more-weight:400;
+    --more-color:#e0301e;
+    --more-right:10px;
+    --more-list-size:10px;
+
+    --after-tags:30px;
+    --pn-top:40px;
+    --pn-bottom:40px;
+    --pn-size:13px;
+  }
+}
+
+/* ==========================================================================
+   ここから下は「仕組み」です。上のパネルの数字を読み込んでいるだけなので、
+   ふつうは触らなくて大丈夫です。
+   ========================================================================== */
 :root{
   --card:#f3f3f5; --ink:#1d1d1f; --sub:#707075; --line:#d9d9de; --red:#e0301e;
   --font:-apple-system,BlinkMacSystemFont,"SF Pro Text","Inter","Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP","Yu Gothic UI",Meiryo,sans-serif;
@@ -33,12 +145,12 @@ header{position:sticky;top:0;z-index:10;background:linear-gradient(#fff 55%,rgba
 .br:hover::before,.br:hover::after,.br:focus-visible::before,.br:focus-visible::after{opacity:1;transition-duration:0s}
 
 /* 一覧 */
-.list{max-width:1088px;display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(40px,6vw,88px);padding-top:24px;padding-bottom:clamp(80px,10vw,128px)}
+.list{max-width:1088px;display:grid;grid-template-columns:minmax(0,1fr);gap:var(--list-gap);padding-top:24px;padding-bottom:clamp(80px,10vw,128px)}
 .work{display:block;min-width:0;max-width:100%}
-.meta{display:flex;align-items:baseline;flex-wrap:wrap;gap:2px 10px;padding:10px 2px 0}
-.meta small{font-size:12px;color:var(--sub)}
-.meta h2{font-size:17px;font-weight:500;letter-spacing:0;line-height:1.4}
-.pill{display:inline-block;background:rgba(240,240,243,.95);color:var(--sub);border-radius:999px;padding:1px 13px;font-size:13px;line-height:1.7;white-space:nowrap}
+.meta{display:flex;align-items:baseline;flex-wrap:wrap;gap:2px 10px;padding:var(--list-caption-top) 2px 0}
+.meta small{font-size:var(--list-cat-size);color:var(--sub)}
+.meta h2{font-size:var(--list-title-size);font-weight:var(--list-title-weight);letter-spacing:0;line-height:1.4}
+.pill{display:inline-block;background:var(--tag-bg);color:var(--tag-color);border-radius:var(--tag-radius);padding:var(--tag-pad);font-size:var(--tag-size);line-height:var(--tag-lh);white-space:nowrap}
 .thumb{position:relative;max-width:100%;aspect-ratio:16/9;border-radius:var(--r);background:var(--card);overflow:hidden}
 .thumb img{width:100%;height:100%;object-fit:cover;display:block}
 .ph{display:flex;align-items:center;justify-content:center;color:var(--sub);font-size:13px}
@@ -57,8 +169,8 @@ header{position:sticky;top:0;z-index:10;background:linear-gradient(#fff 55%,rgba
 .thumb.vfit img{position:relative;width:auto;height:100%;aspect-ratio:9/16}
 
 /* 詳細 */
-.col{max-width:948px;margin:0 auto;padding-left:24px;padding-right:24px}
-.top{padding-top:32px}
+.col{max-width:948px;margin:0 auto;padding-left:var(--side);padding-right:var(--side)}
+.top{padding-top:var(--media-top)}
 .yt{position:relative;aspect-ratio:16/9;border-radius:var(--r);overflow:hidden;background:#000}
 .yt iframe,.sbox iframe,.yt video,.sbox video{position:absolute;inset:0;width:100%;height:100%;border:0}
 .yt video,.sbox video{object-fit:contain;background:#000}
@@ -78,19 +190,19 @@ header{position:sticky;top:0;z-index:10;background:linear-gradient(#fff 55%,rgba
 .dot{width:24px;height:6px;border-radius:3px;border:0;padding:0;background:rgba(29,29,31,.16);cursor:pointer;transition:width .35s ease,background .35s ease}
 .dot.on{width:48px;background:rgba(29,29,31,.72)}
 
-.head{padding-top:40px}
-.head h1{font-weight:500;font-size:clamp(22px,2.6vw,32px);line-height:1.3;letter-spacing:-.02em;margin:0 0 18px}
-.head p{max-width:38em;font-size:16px;line-height:2}
-.tags{display:flex;gap:8px;align-items:center;margin-top:24px;max-width:38em}
+.head{padding-top:var(--media-to-title)}
+.head h1{font-weight:var(--d-title-weight);font-size:var(--d-title-size);line-height:var(--d-title-lh);letter-spacing:var(--d-title-ls);margin:0 0 var(--title-to-text)}
+.head p{max-width:var(--text-width);font-size:var(--text-size);line-height:var(--text-lh);font-weight:var(--text-weight);letter-spacing:var(--text-ls);color:var(--text-color);text-align:left;line-break:strict}
+.tags{display:flex;gap:var(--tag-gap);align-items:center;margin-top:var(--tags-top);max-width:var(--text-width);padding-bottom:var(--after-tags)}
 .tags .ex{margin-left:auto}
-.ex{background:none;border:0;font-size:14px;color:var(--red);cursor:pointer;padding:0}
-.more{display:none;max-width:38em;margin-top:18px;font-size:14px}
+.ex{background:none;border:0;font-size:var(--more-size);font-weight:var(--more-weight);color:var(--more-color);line-height:1;cursor:pointer;padding:0;margin-right:var(--more-right)}
+.more{display:none;max-width:var(--text-width);margin-top:18px;font-size:var(--more-list-size)}
 .more.on{display:block}
 .more a{display:block;color:var(--red)}
 .more a::after{content:" ›"}
 .rest{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;padding-top:56px}
 .rest .thumb{border-radius:var(--r)}
-.pn{display:flex;justify-content:space-between;gap:16px;margin-top:72px;padding-top:20px;border-top:.5px solid var(--line);font-size:14px;color:var(--sub)}
+.pn{display:flex;justify-content:space-between;gap:16px;margin-top:var(--pn-top);margin-bottom:var(--pn-bottom);padding-top:20px;border-top:.5px solid var(--line);font-size:var(--pn-size);color:var(--sub)}
 
 /* about */
 .ab{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:56px;padding-top:clamp(56px,10vw,128px);padding-bottom:120px}
@@ -111,20 +223,10 @@ footer a{color:var(--ink)}
   :root{--sh:min(70svh,520px)}
   :root{--r:10px}
   .in{padding-left:12px;padding-right:12px}
-  .col{padding-left:10px;padding-right:10px}
   .name{font-size:15px}
   .nv{gap:10px;font-size:13px}
   .br{padding:0 .5em}
   .ab{grid-template-columns:1fr;gap:40px}
-  .top{padding-top:14px}
-  .head{padding-top:50px}
-  .head h1{font-size:24px;line-height:1;font-weight:500;letter-spacing:0;margin:0 0 20px}
-  .head p{font-size:10px;line-height:2.3;letter-spacing:0;max-width:none;text-align:left;line-break:strict;color:var(--ink);font-weight:500}
-  .tags{max-width:none;margin-top:14px;gap:5px;padding-bottom:30px}
-  .pill{font-size:8px;line-height:1;padding:5px 8px 4px;border-radius:8px;background:#f0f0f0;color:#a0a0a0}
-  .ex{font-size:8px;line-height:1;margin-right:10px}
-  .more{max-width:none;font-size:10px}
-  .pn{margin-top:40px;margin-bottom:40px;padding-bottom:0;font-size:13px}
   .arw{margin-top:-18px;width:36px;height:36px}
   .arw.p{left:8px}.arw.n{right:8px}
   .sbox.v{max-width:calc(100% - 36px)}.sbox.h{width:calc(100% - 24px)}
@@ -174,13 +276,22 @@ footer a{color:var(--ink)}
 </footer>
 
 <script>
-/* ===== 作品データ（ここを編集すれば内容が変わります） =====
-   tags     : 分類（複数可。例 ['Film','Graphic']）
-   yt       : YouTubeのID。縦型は {id:'…',v:1} と書く
+/* ==========================================================================
+   ★ 作品データ（文章・分類・並び順を変えたいときはここ）★
+   1作品 = { … } のひとかたまり。上から順番が、そのままサイトの並び順です。
+
+   title : 作品名（一覧と詳細に出る）
+   desc  : 詳細ページの説明文（'…' の中を書き換える。改行は不要）
+   tags  : 分類タブ。 ['Film'] / ['Film','Graphic'] のようにカンマで増やせる
+   more  : 「+ 詳細を開く」で出るリンク。 {t:'表示する文字', u:'リンク先URL'}。要らなければ行ごと消す
+   thumbs: 一覧のサムネ画像。先頭の 'images/○○.jpg' を自分の画像に置き換える
+   imgs  : 詳細ページに縦に並べる画像（製氷枡・滑り道など）。 images フォルダに入れた名前を書く
+   yt    : YouTubeのID。縦型は {id:'…',v:1} と書く
+   --- 以下は特別な表示にしたいときだけ ---
    stage    : true なら縦型向けのステージ表示（詳細ページ）
-   tri      : true なら一覧のサムネを「動画ごとの縦割り1枚」にする（押した位置の動画から開く）
-   vertical : true なら縦型1本の作品（一覧は左右をぼかしで埋め、詳細はステージ表示）
-*/
+   tri      : true なら一覧のサムネを「動画ごとの縦割り1枚」にする
+   vertical : true なら縦型1本の作品
+   ========================================================================== */
 var YT=function(id){return ['https://i.ytimg.com/vi/'+id+'/maxresdefault.jpg','https://i.ytimg.com/vi/'+id+'/hqdefault.jpg']};
 var WORKS=[
  {id:'kamon',tags:['Film'],title:'紋の拍動',thumbs:['images/kamon.jpg'].concat(YT('KuNj9hDmbv4')),yt:['KuNj9hDmbv4'],
