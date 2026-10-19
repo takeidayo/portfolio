@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>武井優空 | Portfolio</title>
+<meta name="description" content="武井優空のポートフォリオ。映像・アニメーション・プロダクトの制作実績。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ==========================================================================
+   ★★★ 見た目の調整パネル（ここの数字だけ変えれば、だいたい直せます）★★★
+
+   ① パソコン用の数字 … すぐ下の「:root { }」の中
+   ② iPhone 用の数字  … その下の「@media(max-width:760px) { :root { } }」の中
+      （同じ名前の数字を別々に持っています。iPhone の見た目はこちらだけが変わります）
+   ・どの行も、右に「何が変わるか」を日本語で書いてあります。
+   ・数字の後ろの px はそのまま残す。  例）16px → 18px
+   ・px が付かない数字（行間 2 など）は「文字の大きさの何倍か」です。
+   ・変えたら保存 → 30秒ほど待つ → ブラウザで再読み込み（スマホは開き直す）。
+   ・失敗したら、数字を元に戻せば元通りになります。
+   ========================================================================== */
+
+/* ############ ① パソコン用 ############ */
+:root{
+  /* ── 全体の色・角の丸さ ── */
+  --page-bg:#ffffff;                            /* ページ全体の背景色 */
+  --ink:#1d1d1f;                                /* いちばん基本の文字の色（ほぼ黒） */
+  --sub:#707075;                                /* 薄い文字の色（一覧の分類、前へ／次へ、フッターなど） */
+  --r:8px;                                      /* 映像・画像の角の丸さ。0px で完全に四角、大きいほど丸い */
+  --card:#f3f3f5;                               /* 画像がまだ読み込めないときに出る灰色 */
+  --stage-bg:#e9e9ec;                           /* 縦動画を置く「灰色の台」の色 */
+
+  /* ── バナー（いちばん上の 武井優空 / works / about / contact） ──
+     ▼ バナーは3通りから選べます（下の数字を書き換える） ▼
+     【いまの設定＝全部白】背景は真っ白、文字は黒。
+       --header-alpha-top:1; --header-alpha-bottom:1; --header-blur:0px;
+     【半透明で下に向かって消える】
+       --header-alpha-top:.9; --header-alpha-bottom:0; --header-fade-start:35%; --header-blur:12px;
+     【文字だけ反転】背景なし、後ろが白なら黒・黒なら白の文字に自動で変わる。
+       --header-blend:difference; --header-text:#ffffff; --header-alpha-top:0; --header-alpha-bottom:0; --header-blur:0px;
+  */
+  --header-blend:normal;                        /* バナー文字の色の切り替え方。normal=反転しない（下の --header-text の色のまま）。difference=後ろが白なら黒・黒なら白に自動反転（色が変に見えることがある） */
+  --header-text:#1d1d1f;                        /* バナー文字の色。通常は黒に近い #1d1d1f。difference にするときは白 #ffffff */
+  --header-alpha-top:1;                         /* バナーの「上端」の不透明度。0=完全に透明 1=真っ白。上端と下端を同じ数字にすると、全体が同じ濃さの背景になる */
+  --header-alpha-bottom:1;                      /* バナーの「下端」の不透明度。0=完全に透明 1=真っ白。1 にすると下まで真っ白（いまの設定）。0 にすると下に向かって透明になる */
+  --header-fade-start:100%;                     /* バナーが下に向かって消え始める位置。100%=消えない（下まで同じ）。40% にすると上から4割のところから消え始める */
+  --header-blur:0px;                            /* バナーの後ろをぼかす強さ。0px でぼかさない。半透明にするときだけ 10px 前後にする */
+  --header-h:56px;                              /* バナーの高さ */
+  --logo-size:17px;                             /* 「武井 優空」の文字の大きさ */
+  --logo-weight:600;                            /* 「武井 優空」の太さ（400=ふつう 600=太い 700=もっと太い） */
+  --nav-size:14px;                              /* works / about / contact の文字の大きさ */
+  --nav-gap:26px;                               /* works / about / contact どうしの間隔 */
+  --page-side:24px;                             /* 一覧ページ・バナー・フッターの左右の余白 */
+
+  /* ── 一覧ページ（サムネが並ぶ画面） ── */
+  --list-width:1088px;                          /* サムネが並ぶ幅の上限（パソコンで広がりすぎないように） */
+  --list-top:24px;                              /* バナーと、いちばん上のサムネとのあいだ */
+  --list-gap:clamp(40px,6vw,88px);              /* 作品と作品のあいだの縦の空き。大きいほど広い（clamp(最小,可変,最大) は画面幅で変わる書き方） */
+  --list-caption-top:10px;                      /* サムネ画像と、その下の作品名とのあいだ */
+  --list-title-size:17px;                       /* サムネ下の作品名の大きさ */
+  --list-title-weight:500;                      /* 作品名の太さ（400=ふつう 500=やや太い 700=太い） */
+  --list-cat-size:12px;                         /* 作品名の横の分類（Film など）の大きさ */
+  --list-hover-dark:.14;                        /* マウスを乗せたときサムネが暗くなる濃さ。0=変わらない 0.3=かなり暗い */
+
+  /* ── 詳細ページ：全体の余白 ── */
+  --col-width:948px;                            /* 詳細ページの本文幅の上限（映像・タイトル・説明文が並ぶ幅） */
+  --side:24px;                                  /* 左右の余白。映像・タイトル・説明文の左右がこの幅だけ空く */
+  --media-top:32px;                             /* バナーと、映像とのあいだ */
+  --media-to-title:40px;                        /* 映像と、作品タイトルとのあいだ */
+
+  /* ── 詳細ページ：作品タイトル ── */
+  --d-title-size:clamp(22px,2.6vw,32px);        /* タイトルの大きさ */
+  --d-title-weight:500;                         /* タイトルの太さ（400=ふつう 500=やや太い 700=太い） */
+  --d-title-lh:1.3;                             /* タイトルの行間（文字の何倍か。1=ぴったり） */
+  --d-title-ls:-.02em;                          /* タイトルの字間。マイナスで詰まり、プラスで広がる */
+  --title-to-text:18px;                         /* タイトルと、説明文とのあいだ */
+
+  /* ── 詳細ページ：説明文 ── */
+  --text-size:16px;                             /* 説明文の文字の大きさ */
+  --text-lh:2;                                  /* 説明文の行間（文字の何倍か。1.8〜2.4が目安。大きいほど行が離れる） */
+  --text-weight:400;                            /* 説明文の太さ（400=ふつう 500=やや太い 700=太い） */
+  --text-ls:0em;                                /* 説明文の字間。.02em で少し広がる */
+  --text-width:38em;                            /* 説明文の横幅の上限。38em=文字38個ぶん。none にすると目いっぱい */
+  --text-color:#1d1d1f;                         /* 説明文の色。薄くしたいときは #555 など */
+
+  /* ── 詳細ページ：分類タブ（Film など） ── */
+  --tags-top:24px;                              /* 説明文と、分類タブとのあいだ */
+  --tag-gap:8px;                                /* タブとタブのあいだ */
+  --tag-size:13px;                              /* タブの文字の大きさ */
+  --tag-pad:1px 13px;                           /* タブの内側の余白。「上下 左右」または「上 左右 下」の順で書く */
+  --tag-radius:999px;                           /* タブの角の丸さ。999px=カプセル型、8px=角ばる、0px=四角 */
+  --tag-bg:#f0f0f3;                             /* タブの背景色 */
+  --tag-color:#707075;                          /* タブの文字色 */
+  --tag-lh:1.7;                                 /* タブの文字まわりの上下の空き（大きいとタブが縦に伸びる） */
+
+  /* ── 詳細ページ：「+ 詳細を開く」 ── */
+  --more-size:14px;                             /* 文字の大きさ */
+  --more-weight:400;                            /* 文字の太さ（400=ふつう 500=やや太い 700=太い） */
+  --more-color:#e0301e;                         /* 文字の色（赤） */
+  --more-right:0px;                             /* 右端からの距離。大きくすると左に寄る */
+  --more-list-top:18px;                         /* 「詳細を開く」を押したとき出るリンクと、タブとのあいだ */
+  --more-list-size:14px;                        /* 押したとき出るリンクの文字の大きさ */
+
+  /* ── 詳細ページ：いちばん下（前へ／次へ・フッター） ── */
+  --after-tags:0px;                             /* 分類タブと、下の線とのあいだ（余白を足す） */
+  --pn-top:72px;                                /* 下の線の上の余白 */
+  --pn-bottom:40px;                              /* 前へ／次へ の下の余白 */
+  --pn-size:14px;                               /* 前へ／次へ の文字の大きさ */
+  --footer-top:40px;                            /* フッター（© Yutaka Takei の行）の上の余白 */
+  --footer-size:13px;                           /* フッターの文字の大きさ */
+
+  /* ── 映像の再生ボタン（再生前に映像の中央に出る丸いボタン） ── */
+  --play-size:68px;                             /* 再生ボタンの大きさ */
+  --play-bg:rgba(0,0,0,.72);                    /* 再生ボタンの黒丸の色。rgba(0,0,0,.72)=黒・透明度72%。最後の数字を1にすると真っ黒 */
+
+  /* ── 縦動画のための灰色の台（自主制作アニメ） ── */
+  --stage-h:min(560px,78svh);                   /* 灰色の台の高さ。min(A,B) は「AとBの小さいほう」 */
+  --arrow-w:16px;                               /* 左右の矢印「＜ ＞」の横幅。縦の長さとの比が 16:28 だと HARA と同じ形になる */
+  --arrow-h:28px;                               /* 左右の矢印の縦の長さ。映像に対して大きすぎたら小さくする（横幅も同じ割合で小さく） */
+  --arrow-edge:22px;                            /* 矢印と、灰色の台の左右の端とのあいだ（大きくすると内側へ寄る） */
+  --dots-top:14px;                              /* 灰色の台と、下の点（棒）とのあいだ。小さいほど近づく */
+  --dot-w:24px;                                 /* 点の幅（選んでいない動画） */
+  --dot-on-w:48px;                              /* 点の幅（いま見ている動画） */
+  --dot-h:6px;                                  /* 点の太さ */
+  --dot-gap:6px;                                /* 点と点のあいだ */
+  --dots-to-title:26px;                         /* 点（棒）と、その下の作品タイトルとのあいだ */
+  --dots-align:flex-end;                        /* 点の位置。flex-end=灰色の台の右下 flex-start=左下 center=中央 */
+
+  /* ── 縦動画を左・文章を右に並べる配置（少々お待ちください・自主制作アニメ） ── */
+  --side-video-h:min(640px,80svh);              /* 縦動画の高さ（幅は自動で縦長になる）。大きくすると動画が大きくなる */
+  --side-gap:56px;                              /* 動画と文章とのあいだ。スマホでは動画の下に文章が来るので縦の間隔になる */
+  --side-text-align:flex-end;                   /* 文章の縦の位置。flex-end=動画の下端にそろえる flex-start=上端にそろえる center=中央 */
+  --side-pad:28px;                              /* 複数の動画を切り替える灰色の台の中で、動画の上下の余白 */
+  --side-gutter:60px;                           /* 灰色の台の左右にある、矢印を置く余白の幅（パソコンのみ。スマホは台が画面幅いっぱいになる） */
+
+  /* ── 詳細ページ：下に並ぶ画像（製氷枡・滑り道） ── */
+  --rest-top:56px;                              /* 1枚目の画像と、2枚目以降の画像とのあいだ（文章の下の余白） */
+  --rest-gap:16px;                              /* 画像と画像のあいだ */
+
+  /* ── about ページ ── */
+  --about-top:clamp(56px,10vw,128px);           /* バナーと、about の最初の文字とのあいだ */
+  --about-name-size:clamp(32px,4.4vw,52px);     /* about ページの名前の大きさ */
+  --about-text-size:16px;                       /* about ページの文章の大きさ */
+  --about-text-lh:2;                            /* about ページの文章の行間 */
+}
+
+/* ############ ② iPhone 用（画面幅 760px 以下） ############ */
+@media(max-width:760px){
+  :root{
+    /* ── 全体の色・角の丸さ ── */
+    --page-bg:#ffffff;                            /* ページ全体の背景色 */
+    --ink:#1d1d1f;                                /* いちばん基本の文字の色（ほぼ黒） */
+    --sub:#707075;                                /* 薄い文字の色（一覧の分類、前へ／次へ、フッターなど） */
+    --r:10px;                                     /* 映像・画像の角の丸さ。0px で完全に四角、大きいほど丸い */
+    --card:#f3f3f5;                               /* 画像がまだ読み込めないときに出る灰色 */
+    --stage-bg:#e9e9ec;                           /* 縦動画を置く「灰色の台」の色 */
+
+    /* ── バナー（いちばん上の 武井優空 / works / about / contact） ── */
+    --header-blend:normal;                        /* バナー文字の色の切り替え方。normal=反転しない（下の --header-text の色のまま）。difference=後ろが白なら黒・黒なら白に自動反転（色が変に見えることがある） */
+    --header-text:#1d1d1f;                        /* バナー文字の色。通常は黒に近い #1d1d1f。difference にするときは白 #ffffff */
+    --header-alpha-top:1;                         /* バナーの「上端」の不透明度。0=完全に透明 1=真っ白。上端と下端を同じ数字にすると、全体が同じ濃さの背景になる */
+    --header-alpha-bottom:1;                      /* バナーの「下端」の不透明度。0=完全に透明 1=真っ白。1 にすると下まで真っ白（いまの設定）。0 にすると下に向かって透明になる */
+    --header-fade-start:100%;                     /* バナーが下に向かって消え始める位置。100%=消えない（下まで同じ）。40% にすると上から4割のところから消え始める */
+    --header-blur:0px;                            /* バナーの後ろをぼかす強さ。0px でぼかさない。半透明にするときだけ 10px 前後にする */
+    --header-h:52px;                              /* バナーの高さ */
+    --logo-size:15px;                             /* 「武井 優空」の文字の大きさ */
+    --logo-weight:600;                            /* 「武井 優空」の太さ（400=ふつう 600=太い 700=もっと太い） */
+    --nav-size:13px;                              /* works / about / contact の文字の大きさ */
+    --nav-gap:10px;                               /* works / about / contact どうしの間隔 */
+    --page-side:12px;                             /* 一覧ページ・バナー・フッターの左右の余白 */
+
+    /* ── 一覧ページ（サムネが並ぶ画面） ── */
+    --list-width:1088px;                          /* サムネが並ぶ幅の上限（パソコンで広がりすぎないように） */
+    --list-top:24px;                              /* バナーと、いちばん上のサムネとのあいだ */
+    --list-gap:40px;                              /* 作品と作品のあいだの縦の空き。大きいほど広い（clamp(最小,可変,最大) は画面幅で変わる書き方） */
+    --list-caption-top:10px;                      /* サムネ画像と、その下の作品名とのあいだ */
+    --list-title-size:17px;                       /* サムネ下の作品名の大きさ */
+    --list-title-weight:500;                      /* 作品名の太さ（400=ふつう 500=やや太い 700=太い） */
+    --list-cat-size:12px;                         /* 作品名の横の分類（Film など）の大きさ */
+    --list-hover-dark:.14;                        /* マウスを乗せたときサムネが暗くなる濃さ。0=変わらない 0.3=かなり暗い */
+
+    /* ── 詳細ページ：全体の余白 ── */
+    --col-width:948px;                            /* 詳細ページの本文幅の上限（映像・タイトル・説明文が並ぶ幅） */
+    --side:10px;                                  /* 左右の余白。映像・タイトル・説明文の左右がこの幅だけ空く */
+    --media-top:14px;                             /* バナーと、映像とのあいだ */
+    --media-to-title:50px;                        /* 映像と、作品タイトルとのあいだ */
+
+    /* ── 詳細ページ：作品タイトル ── */
+    --d-title-size:24px;                          /* タイトルの大きさ */
+    --d-title-weight:500;                         /* タイトルの太さ（400=ふつう 500=やや太い 700=太い） */
+    --d-title-lh:1;                               /* タイトルの行間（文字の何倍か。1=ぴったり） */
+    --d-title-ls:0em;                             /* タイトルの字間。マイナスで詰まり、プラスで広がる */
+    --title-to-text:20px;                         /* タイトルと、説明文とのあいだ */
+
+    /* ── 詳細ページ：説明文 ── */
+    --text-size:10px;                             /* 説明文の文字の大きさ */
+    --text-lh:2.3;                                /* 説明文の行間（文字の何倍か。1.8〜2.4が目安。大きいほど行が離れる） */
+    --text-weight:500;                            /* 説明文の太さ（400=ふつう 500=やや太い 700=太い） */
+    --text-ls:0em;                                /* 説明文の字間。.02em で少し広がる */
+    --text-width:none;                            /* 説明文の横幅の上限。38em=文字38個ぶん。none にすると目いっぱい */
+    --text-color:#1d1d1f;                         /* 説明文の色。薄くしたいときは #555 など */
+
+    /* ── 詳細ページ：分類タブ（Film など） ── */
+    --tags-top:14px;                              /* 説明文と、分類タブとのあいだ */
+    --tag-gap:5px;                                /* タブとタブのあいだ */
+    --tag-size:8px;                               /* タブの文字の大きさ */
+    --tag-pad:5px 8px 4px;                        /* タブの内側の余白。「上下 左右」または「上 左右 下」の順で書く */
+    --tag-radius:8px;                             /* タブの角の丸さ。999px=カプセル型、8px=角ばる、0px=四角 */
+    --tag-bg:#f0f0f0;                             /* タブの背景色 */
+    --tag-color:#a0a0a0;                          /* タブの文字色 */
+    --tag-lh:1;                                   /* タブの文字まわりの上下の空き（大きいとタブが縦に伸びる） */
+
+    /* ── 詳細ページ：「+ 詳細を開く」 ── */
+    --more-size:8px;                              /* 文字の大きさ */
+    --more-weight:400;                            /* 文字の太さ（400=ふつう 500=やや太い 700=太い） */
+    --more-color:#e0301e;                         /* 文字の色（赤） */
+    --more-right:10px;                            /* 右端からの距離。大きくすると左に寄る */
+    --more-list-top:18px;                         /* 「詳細を開く」を押したとき出るリンクと、タブとのあいだ */
+    --more-list-size:10px;                        /* 押したとき出るリンクの文字の大きさ */
+
+    /* ── 詳細ページ：いちばん下（前へ／次へ・フッター） ── */
+    --after-tags:30px;                            /* 分類タブと、下の線とのあいだ（余白を足す） */
+    --pn-top:40px;                                /* 下の線の上の余白 */
+    --pn-bottom:40px;                             /* 前へ／次へ の下の余白 */
+    --pn-size:13px;                               /* 前へ／次へ の文字の大きさ */
+    --footer-top:40px;                            /* フッター（© Yutaka Takei の行）の上の余白 */
+    --footer-size:13px;                           /* フッターの文字の大きさ */
+
+    /* ── 映像の再生ボタン（再生前に映像の中央に出る丸いボタン） ── */
+    --play-size:56px;                             /* 再生ボタンの大きさ */
+    --play-bg:rgba(0,0,0,.72);                    /* 再生ボタンの黒丸の色。rgba(0,0,0,.72)=黒・透明度72%。最後の数字を1にすると真っ黒 */
+
+    /* ── 縦動画のための灰色の台（自主制作アニメ） ── */
+    --stage-h:min(70svh,520px);                   /* 灰色の台の高さ。min(A,B) は「AとBの小さいほう」 */
+    --arrow-w:12px;                               /* 左右の矢印「＜ ＞」の横幅。縦の長さとの比が 16:28 だと HARA と同じ形になる */
+    --arrow-h:21px;                               /* 左右の矢印の縦の長さ。映像に対して大きすぎたら小さくする（横幅も同じ割合で小さく） */
+    --arrow-edge:8px;                             /* 矢印と、灰色の台の左右の端とのあいだ（大きくすると内側へ寄る） */
+    --dots-top:14px;                              /* 灰色の台と、下の点（棒）とのあいだ。小さいほど近づく */
+    --dot-w:24px;                                 /* 点の幅（選んでいない動画） */
+    --dot-on-w:48px;                              /* 点の幅（いま見ている動画） */
+    --dot-h:6px;                                  /* 点の太さ */
+    --dot-gap:6px;                                /* 点と点のあいだ */
+    --dots-to-title:22px;                         /* 点（棒）と、その下の作品タイトルとのあいだ */
+    --dots-align:flex-end;                        /* 点の位置。flex-end=灰色の台の右下 flex-start=左下 center=中央 */
+
+    /* ── 縦動画を左・文章を右に並べる配置（少々お待ちください・自主制作アニメ） ── */
+    --side-video-h:min(60svh,480px);              /* 縦動画の高さ（幅は自動で縦長になる）。大きくすると動画が大きくなる */
+    --side-gap:28px;                              /* 動画と文章とのあいだ。スマホでは動画の下に文章が来るので縦の間隔になる */
+    --side-text-align:flex-end;                   /* 文章の縦の位置。flex-end=動画の下端にそろえる flex-start=上端にそろえる center=中央 */
+    --side-pad:24px;                              /* 複数の動画を切り替える灰色の台の中で、動画の上下の余白 */
+    --side-gutter:0px;                            /* 灰色の台の左右にある、矢印を置く余白の幅（パソコンのみ。スマホは台が画面幅いっぱいになる） */
+
+    /* ── 詳細ページ：下に並ぶ画像（製氷枡・滑り道） ── */
+    --rest-top:40px;                              /* 1枚目の画像と、2枚目以降の画像とのあいだ（文章の下の余白） */
+    --rest-gap:10px;                              /* 画像と画像のあいだ */
+
+    /* ── about ページ ── */
+    --about-top:32px;                             /* バナーと、about の最初の文字とのあいだ */
+    --about-name-size:34px;                       /* about ページの名前の大きさ */
+    --about-text-size:14px;                       /* about ページの文章の大きさ */
+    --about-text-lh:2;                            /* about ページの文章の行間 */
+  }
+}
+
+/* ==========================================================================
+   ここから下は「仕組み」です。上のパネルの数字を読み込んでいるだけなので、
+   ふつうは触らなくて大丈夫です。
+   ========================================================================== */
+:root{
+  --font:-apple-system,BlinkMacSystemFont,"SF Pro Text","Inter","Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP","Yu Gothic UI",Meiryo,sans-serif;
+  --sh:var(--stage-h);
+  --line:#d9d9de;
+}
+*{box-sizing:border-box;margin:0}
+html{background:var(--page-bg);scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{overflow-x:clip;color:var(--ink);background:var(--page-bg);font-family:var(--font);font-size:16px;line-height:1.8;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font:inherit}
+:focus-visible{outline:2px solid #0066cc;outline-offset:3px;border-radius:6px}
+.in{max-width:1320px;margin:0 auto;padding-left:var(--page-side);padding-right:var(--page-side)}
+
+header{position:sticky;top:0;z-index:10;color:var(--header-text);mix-blend-mode:var(--header-blend)}
+header::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(to bottom,rgba(255,255,255,var(--header-alpha-top)),rgba(255,255,255,var(--header-alpha-bottom)));-webkit-backdrop-filter:blur(var(--header-blur));backdrop-filter:blur(var(--header-blur));-webkit-mask-image:linear-gradient(to bottom,#000 var(--header-fade-start),transparent);mask-image:linear-gradient(to bottom,#000 var(--header-fade-start),transparent)}
+.bar{display:flex;align-items:center;justify-content:space-between;height:var(--header-h)}
+.name{font-size:var(--logo-size);font-weight:var(--logo-weight);letter-spacing:-.01em;display:flex;align-items:center;gap:10px}
+.name span{font-size:20px;font-weight:400}
+.nv{display:flex;gap:var(--nav-gap);font-size:var(--nav-size)}
+.br{position:relative;display:inline-block;padding:0 .8em}
+.br::before,.br::after{position:absolute;top:0;opacity:0;transition:opacity .12s ease-out}
+.br::before{content:"[";left:0}.br::after{content:"]";right:0}
+.br:hover::before,.br:hover::after,.br:focus-visible::before,.br:focus-visible::after{opacity:1;transition-duration:0s}
+
+/* 一覧 */
+.list{max-width:var(--list-width);display:grid;grid-template-columns:minmax(0,1fr);gap:var(--list-gap);padding-top:var(--list-top);padding-bottom:clamp(80px,10vw,128px)}
+.work{display:block;min-width:0;max-width:100%}
+.meta{display:flex;align-items:baseline;flex-wrap:wrap;gap:2px 10px;padding:var(--list-caption-top) 2px 0}
+.meta small{font-size:var(--list-cat-size);color:var(--sub)}
+.meta h2{font-size:var(--list-title-size);font-weight:var(--list-title-weight);letter-spacing:0;line-height:1.4}
+.pill{display:inline-block;background:var(--tag-bg);color:var(--tag-color);border-radius:var(--tag-radius);padding:var(--tag-pad);font-size:var(--tag-size);line-height:var(--tag-lh);white-space:nowrap}
+.thumb{position:relative;max-width:100%;aspect-ratio:16/9;border-radius:var(--r);background:var(--card);overflow:hidden}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.ph{display:flex;align-items:center;justify-content:center;color:var(--sub);font-size:13px}
+/* 縦型3本を1枚に並べるサムネ */
+.tri{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:3px;background:var(--page-bg)}
+.tri .thumb{aspect-ratio:auto;border-radius:0;height:100%}
+.tri .thumb{cursor:pointer}
+.tri .thumb img{transform:scale(1.09)}
+.work .thumb::after{content:"";position:absolute;inset:0;background:#000;opacity:0;transition:opacity .18s ease-out;pointer-events:none}
+.work:hover .thumb::after{opacity:var(--list-hover-dark)}
+.work:hover .tri::after{opacity:0}
+.work:hover .tri .thumb::after{opacity:0}
+.work .tri .thumb:hover::after{opacity:.2}
+/* 縦型1本：左右は薄いグレーで埋める */
+.thumb.vfit{display:flex;justify-content:center}
+.thumb.vfit img{position:relative;width:auto;height:100%;aspect-ratio:9/16}
+
+/* 詳細 */
+.col{max-width:var(--col-width);margin:0 auto;padding-left:var(--side);padding-right:var(--side)}
+.top{padding-top:var(--media-top)}
+.yt{position:relative;aspect-ratio:16/9;border-radius:var(--r);overflow:hidden;background:#000}
+.yt iframe,.sbox iframe,.yt video,.sbox video,.sidemedia video,.sidemedia iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.yt video,.sbox video,.sidemedia video{object-fit:contain;background:#000}
+/* 再生前の丸い再生ボタン */
+.playbtn{position:absolute;left:50%;top:50%;width:var(--play-size);height:var(--play-size);margin:calc(var(--play-size)/-2) 0 0 calc(var(--play-size)/-2);border-radius:50%;background:var(--play-bg);border:0;-webkit-tap-highlight-color:transparent;color:#fff;display:grid;place-items:center;cursor:pointer;z-index:2;transition:transform .2s}
+.yt video::-webkit-media-controls-start-playback-button,.sbox video::-webkit-media-controls-start-playback-button,.sidemedia video::-webkit-media-controls-start-playback-button{display:none!important;-webkit-appearance:none}
+.playbtn:hover{transform:scale(1.07)}
+.playbtn svg{width:38%;height:38%;margin-left:6%}
+.nat{aspect-ratio:auto;background:none}
+.nat img{height:auto}
+.nat.ph{aspect-ratio:16/9;background:var(--card)}
+/* 縦型動画のステージ（本文と同じ幅） */
+.stage{position:relative;height:var(--sh);background:var(--stage-bg);border-radius:var(--r);overflow:hidden}
+.sin{position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center}
+.sbox{position:relative;flex:none;border-radius:var(--r);overflow:hidden;background:#000}
+.sbox.v{height:calc(var(--sh) - 56px);aspect-ratio:9/16}
+.sbox.h{width:min(calc(100% - 152px),calc((var(--sh) - 56px)*1.7778));aspect-ratio:16/9}
+.arw{position:absolute;top:50%;z-index:3;width:calc(var(--arrow-w) + 24px);height:calc(var(--arrow-h) + 24px);margin-top:calc((var(--arrow-h) + 24px)/-2);border:0;background:none;padding:0;color:var(--ink);display:grid;place-items:center;cursor:pointer;transition:opacity .2s}
+.arw svg{width:var(--arrow-w);height:var(--arrow-h);overflow:visible}
+.arw.p{left:calc(var(--arrow-edge) - 12px)}.arw.n{right:calc(var(--arrow-edge) - 12px)}
+.arw:hover{opacity:.45}
+.dots{display:flex;justify-content:var(--dots-align);gap:var(--dot-gap);margin-top:var(--dots-top)}
+.hasdots + .head{padding-top:var(--dots-to-title)}
+.dot{width:var(--dot-w);height:var(--dot-h);border-radius:3px;border:0;padding:0;background:rgba(29,29,31,.16);cursor:pointer;transition:width .35s ease,background .35s ease}
+.dot.on{width:var(--dot-on-w);background:rgba(29,29,31,.72)}
+
+/* 縦動画を左・文章を右（作品データに side:true と書いた作品） */
+.sidewrap{display:grid;grid-template-columns:auto minmax(0,1fr);gap:var(--side-gap);align-items:var(--side-text-align)}
+.sidemedia{position:relative;height:var(--side-video-h);aspect-ratio:9/16;border-radius:var(--r);overflow:hidden;background:#000}
+.sidewrap .head{padding-top:0}
+.sidewrap .tags{padding-bottom:0}
+.sidewrap.multi .head{margin-bottom:calc(var(--dots-top) + var(--dot-h))}
+/* 複数の動画を切り替える左側の灰色の台 */
+.sidecell{min-width:0}
+.sidestage{height:var(--side-video-h);width:calc((var(--side-video-h) - 2*var(--side-pad))*9/16 + 2*var(--side-gutter))}
+.sidestage .sbox.v{height:calc(var(--side-video-h) - 2*var(--side-pad))}
+.sidestage .sbox.h{width:calc(100% - 2*var(--side-gutter) - 0px);max-width:none}
+
+.head{padding-top:var(--media-to-title)}
+.head h1{font-weight:var(--d-title-weight);font-size:var(--d-title-size);line-height:var(--d-title-lh);letter-spacing:var(--d-title-ls);margin:0 0 var(--title-to-text)}
+.head p{max-width:var(--text-width);font-size:var(--text-size);line-height:var(--text-lh);font-weight:var(--text-weight);letter-spacing:var(--text-ls);color:var(--text-color);text-align:left;line-break:strict}
+.tags{display:flex;gap:var(--tag-gap);align-items:center;margin-top:var(--tags-top);max-width:var(--text-width);padding-bottom:var(--after-tags)}
+.tags .ex{margin-left:auto}
+.ex{background:none;border:0;font-size:var(--more-size);font-weight:var(--more-weight);color:var(--more-color);line-height:1;cursor:pointer;padding:0;margin-right:var(--more-right)}
+.more{display:none;max-width:var(--text-width);margin-top:var(--more-list-top);font-size:var(--more-list-size)}
+.more.on{display:block}
+.more a{display:block;color:var(--red)}
+.more a::after{content:" ›"}
+.rest{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--rest-gap);padding-top:var(--rest-top)}
+.rest .thumb{border-radius:var(--r)}
+.pn{display:flex;justify-content:space-between;gap:16px;margin-top:var(--pn-top);margin-bottom:var(--pn-bottom);padding-top:20px;border-top:.5px solid var(--line);font-size:var(--pn-size);color:var(--sub)}
+
+/* about */
+.ab{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:56px;padding-top:var(--about-top);padding-bottom:120px}
+.ab h1{font-weight:600;font-size:var(--about-name-size);line-height:1.2;letter-spacing:-.02em}
+.ab h1 small{font-size:.42em;color:var(--sub);margin-left:.8em;font-weight:400}
+.ab .s{color:var(--sub);font-size:14px;margin-top:6px}
+.ab dl{margin-top:44px;font-size:14px;line-height:1.9}
+.ab dt{color:var(--sub);margin-top:22px}
+.ab dt:first-child{margin-top:0}
+.ab .r p{font-size:var(--about-text-size);line-height:var(--about-text-lh);max-width:34em}
+.ab .r p+p{margin-top:1.4em}
+.lb{display:block;font-size:12px;color:var(--sub);margin-bottom:12px}
+
+footer{margin-top:var(--footer-top);padding-top:36px;padding-bottom:56px;border-top:.5px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:var(--footer-size);color:var(--sub)}
+footer a{color:var(--ink)}
+
+@media(max-width:760px){
+  .ab{grid-template-columns:1fr;gap:40px}
+  .sbox.v{max-width:calc(100% - 36px)}.sbox.h{width:calc(100% - 56px)}
+  .sidewrap{grid-template-columns:minmax(0,1fr);row-gap:0}
+  .sidemedia{margin:0 auto}
+  .sidestage{width:100%}
+  .sidestage .sbox.h{width:calc(100% - 56px)}
+  .sidestage .sbox.v{max-width:calc(100% - 56px)}
+  .sidewrap .head{padding-top:var(--media-to-title)}
+  .sidewrap .sidecell + .head{padding-top:var(--dots-to-title)}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<header><div class="in bar">
+  <a class="name" href="#/works" aria-label="作品一覧へ"><span id="arr" hidden>←</span>武井 優空</a>
+  <div class="nv">
+    <a class="br" href="#/works">works</a>
+    <a class="br" href="#/about">about</a>
+    <a class="br" href="#contact">contact</a>
+  </div>
+</div></header>
+
+<main id="home">
+  <section class="in list" id="list" aria-label="作品一覧"></section>
+</main>
+
+<article id="detail" hidden></article>
+
+<section id="about" class="in" hidden>
+  <div class="ab">
+    <div>
+      <h1>武井優空<small>Yutaka Takei</small></h1>
+      <p class="s">Film / Animation / Product</p>
+      <dl>
+        <dt>2019 – 2023</dt><dd>千葉工業大学 創造工学部 デザイン科学科</dd>
+        <dt>2023 – 2025</dt><dd>千葉工業大学大学院 創造工学研究科 デザイン科学専攻</dd>
+        <dt>Activity</dt><dd>電通 インターン（クリエイティブ職・アート職）<br>自主アニメーション制作</dd>
+      </dl>
+    </div>
+    <div class="r">
+      <span class="lb">[about]</span>
+      <p>日常の見方を変えれば、毎日が楽しくなる。そんな考えを軸に、映像・アニメーション・プロダクトを横断してものをつくっています。</p>
+      <p>いつもの景色に、想像の余白をつくること。車窓も、待ち時間も、家紋も、見方がひとつ変わるだけで遊び場になります。</p>
+    </div>
+  </div>
+</section>
+
+<footer class="in" id="contact">
+  <span>© Yutaka Takei</span>
+  <a href="mailto:your-address@example.com">your-address@example.com</a>
+</footer>
+
+<script>
+/* ==========================================================================
+   ★ 作品データ（文章・分類・並び順を変えたいときはここ）★
+   1作品 = { … } のひとかたまり。上から順番が、そのままサイトの並び順です。
+
+   title : 作品名（一覧と詳細に出る）
+   desc  : 詳細ページの説明文（'…' の中を書き換える。改行は不要）
+   tags  : 分類タブ。 ['Film'] / ['Film','Graphic'] のようにカンマで増やせる
+   more  : 「+ 詳細を開く」で出るリンク。 {t:'表示する文字', u:'リンク先URL'}。要らなければ行ごと消す
+   thumbs: 一覧のサムネ画像。THUMB_DIR+'○○.jpg' の ○○ を自分の画像の名前にする（thumbs フォルダ内）
+   imgs  : 詳細ページに縦に並べる画像（製氷枡・滑り道など）。 works フォルダに入れた名前を書く（WORK_DIR+'名前.jpg'）
+   yt    : YouTubeのID。縦型は {id:'…',v:1} と書く
+   --- 以下は特別な表示にしたいときだけ ---
+   stage    : true なら複数の動画を灰色の台で切り替える表示（矢印と点で移動）
+   tri      : true なら一覧のサムネを「動画ごとの縦割り1枚」にする
+   vertical : true なら縦型1本の作品（一覧のサムネが縦型用になる）
+   side     : true なら詳細ページで「縦動画を左、文章を右」に並べる（スマホは動画の下に文章）。
+              この単語を消すと、灰色の台に縦動画を置く従来の配置に戻る
+   ========================================================================== */
+/* ★ 画像・映像を入れるフォルダの名前（GitHubのフォルダ名を変えたらここも同じに）★
+   THUMB_DIR : サムネ（一覧に出る小さい画像／動画の再生前の表紙）を入れるフォルダ
+   WORK_DIR  : 作品の本体（映像 mp4・詳細ページに並ぶ静止画）を入れるフォルダ
+   最後の / を消さないこと */
+var THUMB_DIR='thumbs/';
+var WORK_DIR='works/';
+var YT=function(id){return ['https://i.ytimg.com/vi/'+id+'/maxresdefault.jpg','https://i.ytimg.com/vi/'+id+'/hqdefault.jpg']};
+var WORKS=[
+ {id:'kamon',tags:['Film'],title:'紋の拍動',thumbs:[THUMB_DIR+'kamon.jpg'].concat(YT('KuNj9hDmbv4')),yt:['KuNj9hDmbv4'],
+  desc:'家紋の魅力を「構造美」という視点から再解釈した映像作品。家紋を構成する円の大きさに音階と色を対応させ、描かれる過程そのものを視覚と音楽で表現しました。説明するのではなく、体験として美しさを伝えることを目指しています。',
+  more:[{t:'スライド資料を見る',u:'https://app.notion.com/p/3abf11d2bbc881ada44fc77e52061bc8'}]},
+ {id:'wait',tags:['Film'],title:'少々お待ちください',thumbs:[THUMB_DIR+'wait.jpg'].concat(YT('pvjiZf0boLU')),vertical:true,yt:[{id:'pvjiZf0boLU',v:1}],
+  desc:'「20年後のディストピアとは」がテーマ。高速通信で加速した人々の体感速度は、その反動もまた大きくなる。広告や読み込み画面など、誰もが経験する待ち時間を起点に未来を描きました。'},
+ {id:'anime',tags:['Animation'],title:'自主制作アニメ',tri:true,stage:true,
+  yt:[{id:'LvcPt6-EepM',v:1},{id:'-zzhnsR7fpo',v:1},{id:'19V8c5Xz9HE'}],
+  desc:'実写の日常映像にiPadで手描きの動物を合成するオリジナル手法。「日常の見方を変えれば、毎日が楽しくなる」をテーマに、3作品をYouTubeで公開しています。多くの実写×アニメ手法が足元を映さないなか、あえて動く背景に合わせて歩かせることに踏み込みました。'},
+ {id:'keshiki',tags:['Film'],title:'景色を走る',thumbs:[THUMB_DIR+'keshiki.jpg'].concat(YT('SICQc_n1YVA')),yt:['SICQc_n1YVA'],
+  desc:'「日常のつまらないを楽しくするには」がテーマ。車窓をフレームに、風景を障害物に見立て、横スクロールゲームの要領で頭の中に道筋を描く遊びを提案しました。'},
+ {id:'seihyo',tags:['Product'],title:'製氷枡',thumbs:[THUMB_DIR+'seihyo.jpg'],
+  imgs:[WORK_DIR+'seihyo-1.jpg',WORK_DIR+'seihyo-2.jpg',WORK_DIR+'seihyo-3.jpg',WORK_DIR+'seihyo-4.jpg'],desc:''},
+ {id:'suberi',tags:['Product'],title:'滑り道',thumbs:[THUMB_DIR+'suberi.jpg'],
+  imgs:[WORK_DIR+'suberi-1.jpg',WORK_DIR+'suberi-2.jpg',WORK_DIR+'suberi-3.jpg',WORK_DIR+'suberi-4.jpg'],desc:''}
+];
+
+/* ===== 以下は表示の仕組み ===== */
+var $=function(s){return document.querySelector(s)};
+var $list=$('#list'),$home=$('#home'),$d=$('#detail'),$ab=$('#about'),$arr=$('#arr');
+var view='home',lastY=0;
+function jump(y){window.scrollTo({top:y||0,left:0,behavior:'instant'})}
+
+/* 画像を順に試し、全部だめならグレーの枠にする */
+function img(srcs,label,alt,cls,ok){
+  var box=document.createElement('div'); box.className='thumb'+(cls?' '+cls:'');
+  var im=new Image(),i=0; im.alt=alt||''; im.decoding='async';
+  im.onerror=function(){i++; if(i<srcs.length){im.src=srcs[i]} else {im.remove(); box.classList.add('ph'); box.textContent=label}};
+  im.onload=function(){ if(im.naturalWidth<200 && i<srcs.length-1){im.onerror();return} if(ok) ok(im.src) };
+  im.src=srcs[0]; box.appendChild(im); return box;
+}
+function pills(tags){return tags.map(function(t){return '<span class="pill">'+t+'</span>'}).join('')}
+function ytSrcs(id,local){return (local?[local]:[]).concat(YT(id))}
+function norm(y){return typeof y==='string'?{id:y}:y}
+
+/* 一覧のサムネ */
+function cardThumb(w,i){
+  if(w.tri){
+    var box=document.createElement('div'); box.className='thumb tri';
+    w.yt.forEach(function(y,k){ var c=img(ytSrcs(y.id,THUMB_DIR+w.id+'-'+(k+1)+'.jpg'),'',''); c.dataset.i=k; box.appendChild(c) });
+    return box;
+  }
+  if(w.vertical) return img(w.thumbs,w.title,'','vfit');
+  return img(w.thumbs,w.title,'');
+}
+WORKS.forEach(function(w,i){
+  var a=document.createElement('a'); a.className='work'; a.href='#/'+w.id;
+  a.setAttribute('aria-label',w.title+'の詳細を見る');
+  var m=document.createElement('div'); m.className='meta'; m.innerHTML='<h2>'+w.title+'</h2><small>'+w.tags.join(' / ')+'</small>';
+  a.appendChild(cardThumb(w,i)); a.appendChild(m); $list.appendChild(a);
+});
+
+
+/* 詳細：横型の動画 */
+/* 動画の入れ方：videos フォルダに mp4 があればそれを再生し、無ければYouTubeを表示 */
+function fill(el,file,id,label,auto,poster){
+  var v=document.createElement('video'); v.controls=!!auto; v.playsInline=true; v.preload='metadata'; v.setAttribute('aria-label',label);
+  if(poster) v.poster=poster;
+  if(auto) v.autoplay=true;
+  v.onerror=function(){ el.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+id+'?rel=0'+(auto?'&autoplay=1':'')+'" title="'+label+'" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>' };
+  v.src=file+'#t=0.1'; el.innerHTML=''; el.appendChild(v);
+  if(!auto){ /* 再生前だけ出る丸い再生ボタン */
+    var b=document.createElement('button'); b.className='playbtn'; b.setAttribute('aria-label','再生');
+    b.innerHTML='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 3.5v17l14-8.5z"/></svg>';
+    b.onclick=function(e){e.stopPropagation(); v.play()};
+    v.addEventListener('play',function(){v.controls=true;b.remove()}); el.appendChild(b);
+  }
+}
+function ytBox(w){ var d=document.createElement('div'); d.className='yt'; fill(d,WORK_DIR+w.id+'.mp4',w.yt[0],w.title,false,THUMB_DIR+w.id+'.jpg'); return d }
+/* 詳細：縦型を含む動画。背景は動画のぼかし。余白の矢印・下の点・キー・スワイプで移動 */
+var STAGE=null;
+var ARW={p:'<svg viewBox="0 0 16 28" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="butt" stroke-linejoin="miter"><path vector-effect="non-scaling-stroke" d="M15 .5 1 14l14 13.5"/></svg>',
+         n:'<svg viewBox="0 0 16 28" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="butt" stroke-linejoin="miter"><path vector-effect="non-scaling-stroke" d="M1 .5 15 14 1 27.5"/></svg>'};
+function buildStage(w,start,side){
+  var items=w.yt.map(norm),n=items.length,cur=0,dots=[];
+  var wrap=document.createElement('div'); wrap.className=side?'sidecell':'col top';
+  var st=document.createElement('div'); st.className=side?'stage sidestage':'stage'; wrap.appendChild(st);
+  var sin=document.createElement('div'); sin.className='sin'; st.appendChild(sin);
+  var box=document.createElement('div'); box.className='sbox';
+  function arrow(k,label,d){ var b=document.createElement('button'); b.className='arw '+k; b.innerHTML=ARW[k]; b.setAttribute('aria-label',label); b.onclick=function(){step(d)}; return b }
+  sin.appendChild(box);
+  if(n>1){
+    sin.appendChild(arrow('p','前の動画',-1)); sin.appendChild(arrow('n','次の動画',1));
+    var dw=document.createElement('div'); dw.className='dots';
+    items.forEach(function(y,i){ var d=document.createElement('button'); d.className='dot'; d.setAttribute('aria-label',(i+1)+'本目の動画'); d.onclick=function(){show(i,true)}; dots.push(d); dw.appendChild(d) });
+    wrap.appendChild(dw); if(!side) wrap.classList.add('hasdots');
+  }
+  function show(i,auto){
+    cur=((i%n)+n)%n; var y=items[cur];
+    box.className='sbox '+(y.v?'v':'h');
+    fill(box,y.file||(WORK_DIR+w.id+(n>1?'-'+(cur+1):'')+'.mp4'),y.id,w.title+' '+(cur+1),auto,THUMB_DIR+w.id+(n>1?'-'+(cur+1):'')+'.jpg');
+    dots.forEach(function(d,k){d.classList.toggle('on',k===cur)});
+  }
+  function step(d){show(cur+d,true)}
+  var x0=null;
+  st.addEventListener('touchstart',function(e){x0=e.touches[0].clientX},{passive:true});
+  st.addEventListener('touchend',function(e){ if(x0===null||n<2) return; var dx=e.changedTouches[0].clientX-x0; x0=null; if(Math.abs(dx)>50) step(dx<0?1:-1) },{passive:true});
+  STAGE=n>1?{step:step}:null;
+  show(Math.min(start||0,n-1),false); return wrap;
+}
+addEventListener('keydown',function(e){
+  if(!STAGE||view!=='detail') return;
+  if(e.key==='ArrowLeft') STAGE.step(-1); else if(e.key==='ArrowRight') STAGE.step(1);
+});
+
+function showHome(){
+  var was=view; view='home'; $arr.hidden=true; $home.hidden=false; $d.hidden=true; $ab.hidden=true; document.title='武井優空 | Portfolio';
+  jump(was==='home'?0:lastY);
+}
+function showAbout(){
+  if(view==='home') lastY=scrollY; view='about'; $arr.hidden=false;
+  $home.hidden=true; $d.hidden=true; $ab.hidden=false; document.title='about | 武井優空'; jump(0);
+}
+function showWork(idx,start){
+  STAGE=null;
+  var w=WORKS[idx],prev=WORKS[(idx+WORKS.length-1)%WORKS.length],next=WORKS[(idx+1)%WORKS.length];
+  if(view==='home') lastY=scrollY; view='detail'; $arr.hidden=false; $home.hidden=true; $ab.hidden=true; $d.hidden=false; $d.innerHTML='';
+  document.title=w.title+' | 武井優空';
+  var rest=[];
+  var sideMedia=null;
+  if(w.side&&w.stage&&w.yt.length>1){ sideMedia=buildStage(w,start,true) }
+  else if(w.side){ sideMedia=document.createElement('div'); sideMedia.className='sidemedia'; var y0=norm(w.yt[0]); fill(sideMedia,WORK_DIR+w.id+'.mp4',y0.id,w.title,false,THUMB_DIR+w.id+'.jpg') }
+  else if(w.stage||w.vertical){ $d.appendChild(buildStage(w,start)) }
+  else if(w.yt){ var fb=document.createElement('div'); fb.className='col top'; fb.appendChild(ytBox(w)); $d.appendChild(fb) }
+  else if(w.imgs){ var f2=document.createElement('div'); f2.className='col top'; f2.appendChild(img([w.imgs[0]],'画像 1',w.title,'nat')); $d.appendChild(f2); rest=w.imgs.slice(1) }
+  var head=document.createElement('div'); head.className=w.side?'head':'col head';
+  head.innerHTML='<h1></h1>'+(w.desc?'<p></p>':'')+'<div class="tags">'+pills(w.tags)+'</div>';
+  head.querySelector('h1').textContent=w.title;
+  if(w.desc) head.querySelector('p').textContent=w.desc;
+  if(w.more){
+    var b=document.createElement('button'); b.className='ex'; b.textContent='+ 詳細を開く'; b.setAttribute('aria-expanded','false');
+    var mo=document.createElement('div'); mo.className='more';
+    w.more.forEach(function(l){var a=document.createElement('a');a.href=l.u;a.target='_blank';a.rel='noopener';a.textContent=l.t;mo.appendChild(a)});
+    b.onclick=function(){var on=mo.classList.toggle('on');b.textContent=on?'− 詳細を閉じる':'+ 詳細を開く';b.setAttribute('aria-expanded',on)};
+    head.querySelector('.tags').appendChild(b); head.appendChild(mo);
+  }
+  if(w.side){ var sw=document.createElement('div'); sw.className='col top'; var gr=document.createElement('div'); gr.className='sidewrap'+(w.stage&&w.yt.length>1?' multi':''); gr.appendChild(sideMedia); gr.appendChild(head); sw.appendChild(gr); $d.appendChild(sw) }
+  else $d.appendChild(head);
+  if(rest.length){
+    var r=document.createElement('div'); r.className='col rest';
+    rest.forEach(function(s,i){r.appendChild(img([s],'画像 '+(i+2),w.title,'nat'))}); $d.appendChild(r);
+  }
+  var pn=document.createElement('div'); pn.className='col';
+  pn.innerHTML='<div class="pn"><a href="#/'+prev.id+'">‹ '+prev.title+'</a><a href="#/works">すべての作品</a><a href="#/'+next.id+'">'+next.title+' ›</a></div>';
+  $d.appendChild(pn); jump(0);
+}
+function route(h){
+  h=h||location.hash||'';
+  if(h==='#contact') return;
+  var m=h.match(/^#\/([^\/]+)(?:\/(\d+))?$/),id=m?m[1]:'',start=m&&m[2]?+m[2]:0;
+  if(id==='about') return showAbout();
+  if(id===''||id==='works') return showHome();
+  var idx=WORKS.findIndex(function(x){return x.id===id}); idx<0?showHome():showWork(idx,start);
+}
+function go(h){ try{history.pushState(null,'',h)}catch(e){} route(h) }
+document.addEventListener('click',function(e){
+  var c=e.target.closest&&e.target.closest('.tri [data-i]');
+  if(c&&!(e.metaKey||e.ctrlKey||e.shiftKey)){ e.preventDefault(); go(c.closest('a.work').getAttribute('href')+'/'+c.dataset.i); return; }
+  var a=e.target.closest&&e.target.closest('a[href^="#/"]');
+  if(!a||e.metaKey||e.ctrlKey||e.shiftKey) return;
+  e.preventDefault(); go(a.getAttribute('href'));
+});
+addEventListener('popstate',function(){route()});
+route();
+</script>
+</body>
+</html>
