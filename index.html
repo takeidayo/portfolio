@@ -33,8 +33,9 @@
   --stage-bg:#e9e9ec;                           /* 縦動画を置く「灰色の台」の色 */
 
   /* ── バナー（いちばん上の 武井優空 / works / about / contact） ── */
-  --header-alpha:.6;                            /* バナーの透明度。0=完全に透明（後ろが丸見え） 1=真っ白で不透明。.6 くらいが半透明 */
-  --header-blur:20px;                           /* バナーの後ろをぼかす強さ。0px でぼかさない、大きいほどぼける */
+  --header-alpha-top:.9;                        /* バナーの「上端」の不透明度。0=完全に透明 1=真っ白 */
+  --header-alpha-bottom:0;                      /* バナーの「下端」の不透明度。0=完全に透明。上から下へ、この2つの数字のあいだで徐々に変わる */
+  --header-blur:12px;                           /* バナーの後ろをぼかす強さ（下に行くほど自然に弱まる）。0px でぼかさない */
   --header-h:56px;                              /* バナーの高さ */
   --logo-size:17px;                             /* 「武井 優空」の文字の大きさ */
   --logo-weight:600;                            /* 「武井 優空」の太さ（400=ふつう 600=太い 700=もっと太い） */
@@ -101,17 +102,21 @@
 
   /* ── 映像の再生ボタン（再生前に映像の中央に出る丸いボタン） ── */
   --play-size:68px;                             /* 再生ボタンの大きさ */
-  --play-bg:rgba(0,0,0,.55);                    /* 再生ボタンの色。rgba(0,0,0,.55) は「黒・透明度55%」。最後の数字を小さくすると薄くなる */
+  --play-bg:rgba(0,0,0,.72);                    /* 再生ボタンの黒丸の色。rgba(0,0,0,.72)=黒・透明度72%。最後の数字を1にすると真っ黒 */
+  --play-ring:1.5px solid rgba(255,255,255,.35);/* 黒丸のふち。黒い映像の上でも丸が見えるようにする。要らなければ 0 solid transparent */
 
   /* ── 縦動画のための灰色の台（自主制作アニメ） ── */
   --stage-h:min(560px,78svh);                   /* 灰色の台の高さ。min(A,B) は「AとBの小さいほう」 */
-  --arrow-size:44px;                            /* 左右の矢印ボタンの大きさ */
-  --arrow-edge:16px;                            /* 矢印と、台の端とのあいだ */
-  --dots-top:32px;                              /* 台と、下の点（●●●の棒）とのあいだ */
+  --arrow-w:22px;                               /* 左右の矢印「＜ ＞」の横幅（細い山形） */
+  --arrow-h:44px;                               /* 左右の矢印の縦の長さ。映像に対して大きすぎたら小さくする */
+  --arrow-edge:36px;                            /* 矢印と、灰色の台の左右の端とのあいだ（大きくすると内側へ寄る） */
+  --dots-top:14px;                              /* 灰色の台と、下の点（棒）とのあいだ。小さいほど近づく */
   --dot-w:24px;                                 /* 点の幅（選んでいない動画） */
   --dot-on-w:48px;                              /* 点の幅（いま見ている動画） */
   --dot-h:6px;                                  /* 点の太さ */
   --dot-gap:6px;                                /* 点と点のあいだ */
+  --dots-to-title:26px;                         /* 点（棒）と、その下の作品タイトルとのあいだ */
+  --dots-align:flex-end;                        /* 点の位置。flex-end=灰色の台の右下 flex-start=左下 center=中央 */
 
   /* ── 縦動画を左・文章を右に並べる配置（少々お待ちください） ── */
   --side-video-h:min(640px,80svh);              /* 縦動画の高さ（幅は自動で縦長になる）。大きくすると動画が大きくなる */
@@ -140,8 +145,9 @@
     --stage-bg:#e9e9ec;                           /* 縦動画を置く「灰色の台」の色 */
 
     /* ── バナー（いちばん上の 武井優空 / works / about / contact） ── */
-    --header-alpha:.6;                            /* バナーの透明度。0=完全に透明（後ろが丸見え） 1=真っ白で不透明。.6 くらいが半透明 */
-    --header-blur:16px;                           /* バナーの後ろをぼかす強さ。0px でぼかさない、大きいほどぼける */
+    --header-alpha-top:.9;                        /* バナーの「上端」の不透明度。0=完全に透明 1=真っ白 */
+    --header-alpha-bottom:0;                      /* バナーの「下端」の不透明度。0=完全に透明。上から下へ、この2つの数字のあいだで徐々に変わる */
+    --header-blur:10px;                           /* バナーの後ろをぼかす強さ（下に行くほど自然に弱まる）。0px でぼかさない */
     --header-h:52px;                              /* バナーの高さ */
     --logo-size:15px;                             /* 「武井 優空」の文字の大きさ */
     --logo-weight:600;                            /* 「武井 優空」の太さ（400=ふつう 600=太い 700=もっと太い） */
@@ -208,17 +214,21 @@
 
     /* ── 映像の再生ボタン（再生前に映像の中央に出る丸いボタン） ── */
     --play-size:56px;                             /* 再生ボタンの大きさ */
-    --play-bg:rgba(0,0,0,.55);                    /* 再生ボタンの色。rgba(0,0,0,.55) は「黒・透明度55%」。最後の数字を小さくすると薄くなる */
+    --play-bg:rgba(0,0,0,.72);                    /* 再生ボタンの黒丸の色。rgba(0,0,0,.72)=黒・透明度72%。最後の数字を1にすると真っ黒 */
+    --play-ring:1.5px solid rgba(255,255,255,.35);/* 黒丸のふち。黒い映像の上でも丸が見えるようにする。要らなければ 0 solid transparent */
 
     /* ── 縦動画のための灰色の台（自主制作アニメ） ── */
     --stage-h:min(70svh,520px);                   /* 灰色の台の高さ。min(A,B) は「AとBの小さいほう」 */
-    --arrow-size:36px;                            /* 左右の矢印ボタンの大きさ */
-    --arrow-edge:8px;                             /* 矢印と、台の端とのあいだ */
-    --dots-top:32px;                              /* 台と、下の点（●●●の棒）とのあいだ */
+    --arrow-w:14px;                               /* 左右の矢印「＜ ＞」の横幅（細い山形） */
+    --arrow-h:30px;                               /* 左右の矢印の縦の長さ。映像に対して大きすぎたら小さくする */
+    --arrow-edge:8px;                             /* 矢印と、灰色の台の左右の端とのあいだ（大きくすると内側へ寄る） */
+    --dots-top:14px;                              /* 灰色の台と、下の点（棒）とのあいだ。小さいほど近づく */
     --dot-w:24px;                                 /* 点の幅（選んでいない動画） */
     --dot-on-w:48px;                              /* 点の幅（いま見ている動画） */
     --dot-h:6px;                                  /* 点の太さ */
     --dot-gap:6px;                                /* 点と点のあいだ */
+    --dots-to-title:22px;                         /* 点（棒）と、その下の作品タイトルとのあいだ */
+    --dots-align:flex-end;                        /* 点の位置。flex-end=灰色の台の右下 flex-start=左下 center=中央 */
 
     /* ── 縦動画を左・文章を右に並べる配置（少々お待ちください） ── */
     --side-video-h:min(60svh,480px);              /* 縦動画の高さ（幅は自動で縦長になる）。大きくすると動画が大きくなる */
@@ -253,7 +263,8 @@ button{font:inherit}
 :focus-visible{outline:2px solid #0066cc;outline-offset:3px;border-radius:6px}
 .in{max-width:1320px;margin:0 auto;padding-left:var(--page-side);padding-right:var(--page-side)}
 
-header{position:sticky;top:0;z-index:10;background:rgba(255,255,255,var(--header-alpha));-webkit-backdrop-filter:blur(var(--header-blur));backdrop-filter:blur(var(--header-blur))}
+header{position:sticky;top:0;z-index:10}
+header::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(to bottom,rgba(255,255,255,var(--header-alpha-top)),rgba(255,255,255,var(--header-alpha-bottom)));-webkit-backdrop-filter:blur(var(--header-blur));backdrop-filter:blur(var(--header-blur));-webkit-mask-image:linear-gradient(to bottom,#000 35%,transparent);mask-image:linear-gradient(to bottom,#000 35%,transparent)}
 .bar{display:flex;align-items:center;justify-content:space-between;height:var(--header-h)}
 .name{font-size:var(--logo-size);font-weight:var(--logo-weight);letter-spacing:-.01em;display:flex;align-items:center;gap:10px}
 .name span{font-size:20px;font-weight:400}
@@ -294,7 +305,7 @@ header{position:sticky;top:0;z-index:10;background:rgba(255,255,255,var(--header
 .yt iframe,.sbox iframe,.yt video,.sbox video,.sidemedia video,.sidemedia iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 .yt video,.sbox video,.sidemedia video{object-fit:contain;background:#000}
 /* 再生前の丸い再生ボタン */
-.playbtn{position:absolute;left:50%;top:50%;width:var(--play-size);height:var(--play-size);margin:calc(var(--play-size)/-2) 0 0 calc(var(--play-size)/-2);border-radius:50%;border:0;background:var(--play-bg);color:#fff;display:grid;place-items:center;cursor:pointer;z-index:2;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);transition:transform .2s}
+.playbtn{position:absolute;left:50%;top:50%;width:var(--play-size);height:var(--play-size);margin:calc(var(--play-size)/-2) 0 0 calc(var(--play-size)/-2);border-radius:50%;background:var(--play-bg);border:var(--play-ring);color:#fff;display:grid;place-items:center;cursor:pointer;z-index:2;transition:transform .2s}
 .playbtn:hover{transform:scale(1.07)}
 .playbtn svg{width:38%;height:38%;margin-left:6%}
 .nat{aspect-ratio:auto;background:none}
@@ -306,10 +317,12 @@ header{position:sticky;top:0;z-index:10;background:rgba(255,255,255,var(--header
 .sbox{position:relative;flex:none;border-radius:var(--r);overflow:hidden;background:#000}
 .sbox.v{height:calc(var(--sh) - 56px);aspect-ratio:9/16}
 .sbox.h{width:min(calc(100% - 152px),calc((var(--sh) - 56px)*1.7778));aspect-ratio:16/9}
-.arw{position:absolute;top:50%;margin-top:calc(var(--arrow-size)/-2);z-index:3;width:var(--arrow-size);height:var(--arrow-size);border-radius:50%;border:0;background:rgba(255,255,255,.85);color:var(--ink);display:grid;place-items:center;cursor:pointer;transition:background .2s,transform .2s}
-.arw.p{left:var(--arrow-edge)}.arw.n{right:var(--arrow-edge)}
-.arw:hover{background:#fff;transform:scale(1.06)}
-.dots{display:flex;gap:var(--dot-gap);margin-top:var(--dots-top)}
+.arw{position:absolute;top:50%;z-index:3;width:calc(var(--arrow-w) + 24px);height:calc(var(--arrow-h) + 24px);margin-top:calc((var(--arrow-h) + 24px)/-2);border:0;background:none;padding:0;color:var(--ink);display:grid;place-items:center;cursor:pointer;transition:opacity .2s}
+.arw svg{width:var(--arrow-w);height:var(--arrow-h);overflow:visible}
+.arw.p{left:calc(var(--arrow-edge) - 12px)}.arw.n{right:calc(var(--arrow-edge) - 12px)}
+.arw:hover{opacity:.45}
+.dots{display:flex;justify-content:var(--dots-align);gap:var(--dot-gap);margin-top:var(--dots-top)}
+.hasdots + .head{padding-top:var(--dots-to-title)}
 .dot{width:var(--dot-w);height:var(--dot-h);border-radius:3px;border:0;padding:0;background:rgba(29,29,31,.16);cursor:pointer;transition:width .35s ease,background .35s ease}
 .dot.on{width:var(--dot-on-w);background:rgba(29,29,31,.72)}
 
@@ -349,8 +362,7 @@ footer a{color:var(--ink)}
 
 @media(max-width:760px){
   .ab{grid-template-columns:1fr;gap:40px}
-  .arw{margin-top:calc(var(--arrow-size)/-2)}
-  .sbox.v{max-width:calc(100% - 36px)}.sbox.h{width:calc(100% - 24px)}
+  .sbox.v{max-width:calc(100% - 36px)}.sbox.h{width:calc(100% - 56px)}
   .sidewrap{grid-template-columns:minmax(0,1fr)}
   .sidemedia{margin:0 auto}
   .sidewrap .head{padding-top:var(--media-to-title)}
@@ -490,8 +502,8 @@ function fill(el,file,id,label,auto,poster){
 function ytBox(w){ var d=document.createElement('div'); d.className='yt'; fill(d,'videos/'+w.id+'.mp4',w.yt[0],w.title,false,'images/'+w.id+'.jpg'); return d }
 /* 詳細：縦型を含む動画。背景は動画のぼかし。余白の矢印・下の点・キー・スワイプで移動 */
 var STAGE=null;
-var ARW={p:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 5.5 8 12l6.5 6.5"/></svg>',
-         n:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 5.5 16 12l-6.5 6.5"/></svg>'};
+var ARW={p:'<svg viewBox="0 0 24 48" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path vector-effect="non-scaling-stroke" d="M20 2 4 24l16 22"/></svg>',
+         n:'<svg viewBox="0 0 24 48" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path vector-effect="non-scaling-stroke" d="M4 2l16 22L4 46"/></svg>'};
 function buildStage(w,start){
   var items=w.yt.map(norm),n=items.length,cur=0,dots=[];
   var wrap=document.createElement('div'); wrap.className='col top';
@@ -504,7 +516,7 @@ function buildStage(w,start){
     sin.appendChild(arrow('p','前の動画',-1)); sin.appendChild(arrow('n','次の動画',1));
     var dw=document.createElement('div'); dw.className='dots';
     items.forEach(function(y,i){ var d=document.createElement('button'); d.className='dot'; d.setAttribute('aria-label',(i+1)+'本目の動画'); d.onclick=function(){show(i,true)}; dots.push(d); dw.appendChild(d) });
-    wrap.appendChild(dw);
+    wrap.appendChild(dw); wrap.classList.add('hasdots');
   }
   function show(i,auto){
     cur=((i%n)+n)%n; var y=items[cur];
