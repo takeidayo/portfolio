@@ -322,6 +322,8 @@ header::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:no
 .yt{position:relative;aspect-ratio:16/9;border-radius:var(--r);overflow:hidden;background:#000}
 .yt iframe,.sbox iframe,.yt video,.sbox video,.sidemedia video,.sidemedia iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 .yt video,.sbox video,.sidemedia video{object-fit:contain;background:#000}
+/* 縦動画は枠いっぱいに敷く（端数ピクセルで右に黒い線が出るのを防ぐ。9:16の動画なら切れる部分はありません） */
+.sbox.v video,.sidemedia video{object-fit:cover}
 /* 再生前の丸い再生ボタン */
 .playbtn{position:absolute;left:50%;top:50%;width:var(--play-size);height:var(--play-size);margin:calc(var(--play-size)/-2) 0 0 calc(var(--play-size)/-2);border-radius:50%;background:var(--play-bg);border:0;-webkit-tap-highlight-color:transparent;color:#fff;display:grid;place-items:center;cursor:pointer;z-index:2;transition:transform .2s}
 .yt video::-webkit-media-controls-start-playback-button,.sbox video::-webkit-media-controls-start-playback-button,.sidemedia video::-webkit-media-controls-start-playback-button{display:none!important;-webkit-appearance:none}
