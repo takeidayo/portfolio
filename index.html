@@ -119,7 +119,7 @@
   --stage-h:min(560px,78svh);                   /* 灰色の台の高さ。min(A,B) は「AとBの小さいほう」 */
   --arrow-w:16px;                               /* 左右の矢印「＜ ＞」の横幅。縦の長さとの比が 16:28 だと HARA と同じ形になる */
   --arrow-h:28px;                               /* 左右の矢印の縦の長さ。映像に対して大きすぎたら小さくする（横幅も同じ割合で小さく） */
-  --arrow-edge:36px;                            /* 矢印と、灰色の台の左右の端とのあいだ（大きくすると内側へ寄る） */
+  --arrow-edge:22px;                            /* 矢印と、灰色の台の左右の端とのあいだ（大きくすると内側へ寄る） */
   --dots-top:14px;                              /* 灰色の台と、下の点（棒）とのあいだ。小さいほど近づく */
   --dot-w:24px;                                 /* 点の幅（選んでいない動画） */
   --dot-on-w:48px;                              /* 点の幅（いま見ている動画） */
@@ -128,9 +128,12 @@
   --dots-to-title:26px;                         /* 点（棒）と、その下の作品タイトルとのあいだ */
   --dots-align:flex-end;                        /* 点の位置。flex-end=灰色の台の右下 flex-start=左下 center=中央 */
 
-  /* ── 縦動画を左・文章を右に並べる配置（少々お待ちください） ── */
+  /* ── 縦動画を左・文章を右に並べる配置（少々お待ちください・自主制作アニメ） ── */
   --side-video-h:min(640px,80svh);              /* 縦動画の高さ（幅は自動で縦長になる）。大きくすると動画が大きくなる */
   --side-gap:56px;                              /* 動画と文章とのあいだ。スマホでは動画の下に文章が来るので縦の間隔になる */
+  --side-text-align:flex-end;                   /* 文章の縦の位置。flex-end=動画の下端にそろえる flex-start=上端にそろえる center=中央 */
+  --side-pad:28px;                              /* 複数の動画を切り替える灰色の台の中で、動画の上下の余白 */
+  --side-gutter:60px;                           /* 灰色の台の左右にある、矢印を置く余白の幅（パソコンのみ。スマホは台が画面幅いっぱいになる） */
 
   /* ── 詳細ページ：下に並ぶ画像（製氷枡・滑り道） ── */
   --rest-top:56px;                              /* 1枚目の画像と、2枚目以降の画像とのあいだ（文章の下の余白） */
@@ -242,9 +245,12 @@
     --dots-to-title:22px;                         /* 点（棒）と、その下の作品タイトルとのあいだ */
     --dots-align:flex-end;                        /* 点の位置。flex-end=灰色の台の右下 flex-start=左下 center=中央 */
 
-    /* ── 縦動画を左・文章を右に並べる配置（少々お待ちください） ── */
+    /* ── 縦動画を左・文章を右に並べる配置（少々お待ちください・自主制作アニメ） ── */
     --side-video-h:min(60svh,480px);              /* 縦動画の高さ（幅は自動で縦長になる）。大きくすると動画が大きくなる */
     --side-gap:28px;                              /* 動画と文章とのあいだ。スマホでは動画の下に文章が来るので縦の間隔になる */
+    --side-text-align:flex-end;                   /* 文章の縦の位置。flex-end=動画の下端にそろえる flex-start=上端にそろえる center=中央 */
+    --side-pad:24px;                              /* 複数の動画を切り替える灰色の台の中で、動画の上下の余白 */
+    --side-gutter:0px;                            /* 灰色の台の左右にある、矢印を置く余白の幅（パソコンのみ。スマホは台が画面幅いっぱいになる） */
 
     /* ── 詳細ページ：下に並ぶ画像（製氷枡・滑り道） ── */
     --rest-top:40px;                              /* 1枚目の画像と、2枚目以降の画像とのあいだ（文章の下の余白） */
@@ -340,9 +346,16 @@ header::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:no
 .dot.on{width:var(--dot-on-w);background:rgba(29,29,31,.72)}
 
 /* 縦動画を左・文章を右（作品データに side:true と書いた作品） */
-.sidewrap{display:grid;grid-template-columns:auto minmax(0,1fr);gap:var(--side-gap);align-items:start}
+.sidewrap{display:grid;grid-template-columns:auto minmax(0,1fr);gap:var(--side-gap);align-items:var(--side-text-align)}
 .sidemedia{position:relative;height:var(--side-video-h);aspect-ratio:9/16;border-radius:var(--r);overflow:hidden;background:#000}
 .sidewrap .head{padding-top:0}
+.sidewrap .tags{padding-bottom:0}
+.sidewrap.multi .head{margin-bottom:calc(var(--dots-top) + var(--dot-h))}
+/* 複数の動画を切り替える左側の灰色の台 */
+.sidecell{min-width:0}
+.sidestage{height:var(--side-video-h);width:calc((var(--side-video-h) - 2*var(--side-pad))*9/16 + 2*var(--side-gutter))}
+.sidestage .sbox.v{height:calc(var(--side-video-h) - 2*var(--side-pad))}
+.sidestage .sbox.h{width:calc(100% - 2*var(--side-gutter) - 0px);max-width:none}
 
 .head{padding-top:var(--media-to-title)}
 .head h1{font-weight:var(--d-title-weight);font-size:var(--d-title-size);line-height:var(--d-title-lh);letter-spacing:var(--d-title-ls);margin:0 0 var(--title-to-text)}
@@ -376,9 +389,13 @@ footer a{color:var(--ink)}
 @media(max-width:760px){
   .ab{grid-template-columns:1fr;gap:40px}
   .sbox.v{max-width:calc(100% - 36px)}.sbox.h{width:calc(100% - 56px)}
-  .sidewrap{grid-template-columns:minmax(0,1fr)}
+  .sidewrap{grid-template-columns:minmax(0,1fr);row-gap:0}
   .sidemedia{margin:0 auto}
+  .sidestage{width:100%}
+  .sidestage .sbox.h{width:calc(100% - 56px)}
+  .sidestage .sbox.v{max-width:calc(100% - 56px)}
   .sidewrap .head{padding-top:var(--media-to-title)}
+  .sidewrap .sidecell + .head{padding-top:var(--dots-to-title)}
 }
 @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 </style>
@@ -437,7 +454,7 @@ footer a{color:var(--ink)}
    imgs  : 詳細ページに縦に並べる画像（製氷枡・滑り道など）。 images フォルダに入れた名前を書く
    yt    : YouTubeのID。縦型は {id:'…',v:1} と書く
    --- 以下は特別な表示にしたいときだけ ---
-   stage    : true なら縦型向けのステージ表示（詳細ページ）
+   stage    : true なら複数の動画を灰色の台で切り替える表示（矢印と点で移動）
    tri      : true なら一覧のサムネを「動画ごとの縦割り1枚」にする
    vertical : true なら縦型1本の作品（一覧のサムネが縦型用になる）
    side     : true なら詳細ページで「縦動画を左、文章を右」に並べる（スマホは動画の下に文章）。
@@ -450,7 +467,7 @@ var WORKS=[
   more:[{t:'スライド資料を見る',u:'https://app.notion.com/p/3abf11d2bbc881ada44fc77e52061bc8'}]},
  {id:'matte',tags:['Film'],title:'少々お待ちください',thumbs:['images/matte.jpg'].concat(YT('pvjiZf0boLU')),vertical:true,side:true,yt:[{id:'pvjiZf0boLU',v:1}],
   desc:'「20年後のディストピアとは」がテーマ。高速通信で加速した人々の体感速度は、その反動もまた大きくなる。広告や読み込み画面など、誰もが経験する待ち時間を起点に未来を描きました。'},
- {id:'anime',tags:['Animation'],title:'自主制作アニメ',tri:true,stage:true,
+ {id:'anime',tags:['Animation'],title:'自主制作アニメ',tri:true,stage:true,side:true,
   yt:[{id:'LvcPt6-EepM',v:1},{id:'-zzhnsR7fpo',v:1},{id:'19V8c5Xz9HE'}],
   desc:'実写の日常映像にiPadで手描きの動物を合成するオリジナル手法。「日常の見方を変えれば、毎日が楽しくなる」をテーマに、3作品をYouTubeで公開しています。多くの実写×アニメ手法が足元を映さないなか、あえて動く背景に合わせて歩かせることに踏み込みました。'},
  {id:'keshiki',tags:['Film'],title:'景色を走る',thumbs:['images/keshiki.jpg'].concat(YT('SICQc_n1YVA')),yt:['SICQc_n1YVA'],
@@ -517,10 +534,10 @@ function ytBox(w){ var d=document.createElement('div'); d.className='yt'; fill(d
 var STAGE=null;
 var ARW={p:'<svg viewBox="0 0 16 28" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="butt" stroke-linejoin="miter"><path vector-effect="non-scaling-stroke" d="M15 .5 1 14l14 13.5"/></svg>',
          n:'<svg viewBox="0 0 16 28" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="butt" stroke-linejoin="miter"><path vector-effect="non-scaling-stroke" d="M1 .5 15 14 1 27.5"/></svg>'};
-function buildStage(w,start){
+function buildStage(w,start,side){
   var items=w.yt.map(norm),n=items.length,cur=0,dots=[];
-  var wrap=document.createElement('div'); wrap.className='col top';
-  var st=document.createElement('div'); st.className='stage'; wrap.appendChild(st);
+  var wrap=document.createElement('div'); wrap.className=side?'sidecell':'col top';
+  var st=document.createElement('div'); st.className=side?'stage sidestage':'stage'; wrap.appendChild(st);
   var sin=document.createElement('div'); sin.className='sin'; st.appendChild(sin);
   var box=document.createElement('div'); box.className='sbox';
   function arrow(k,label,d){ var b=document.createElement('button'); b.className='arw '+k; b.innerHTML=ARW[k]; b.setAttribute('aria-label',label); b.onclick=function(){step(d)}; return b }
@@ -529,7 +546,7 @@ function buildStage(w,start){
     sin.appendChild(arrow('p','前の動画',-1)); sin.appendChild(arrow('n','次の動画',1));
     var dw=document.createElement('div'); dw.className='dots';
     items.forEach(function(y,i){ var d=document.createElement('button'); d.className='dot'; d.setAttribute('aria-label',(i+1)+'本目の動画'); d.onclick=function(){show(i,true)}; dots.push(d); dw.appendChild(d) });
-    wrap.appendChild(dw); wrap.classList.add('hasdots');
+    wrap.appendChild(dw); if(!side) wrap.classList.add('hasdots');
   }
   function show(i,auto){
     cur=((i%n)+n)%n; var y=items[cur];
@@ -564,7 +581,8 @@ function showWork(idx,start){
   document.title=w.title+' | 武井優空';
   var rest=[];
   var sideMedia=null;
-  if(w.side){ sideMedia=document.createElement('div'); sideMedia.className='sidemedia'; var y0=norm(w.yt[0]); fill(sideMedia,'videos/'+w.id+'.mp4',y0.id,w.title,false,'images/'+w.id+'.jpg') }
+  if(w.side&&w.stage&&w.yt.length>1){ sideMedia=buildStage(w,start,true) }
+  else if(w.side){ sideMedia=document.createElement('div'); sideMedia.className='sidemedia'; var y0=norm(w.yt[0]); fill(sideMedia,'videos/'+w.id+'.mp4',y0.id,w.title,false,'images/'+w.id+'.jpg') }
   else if(w.stage||w.vertical){ $d.appendChild(buildStage(w,start)) }
   else if(w.yt){ var fb=document.createElement('div'); fb.className='col top'; fb.appendChild(ytBox(w)); $d.appendChild(fb) }
   else if(w.imgs){ var f2=document.createElement('div'); f2.className='col top'; f2.appendChild(img([w.imgs[0]],'画像 1',w.title,'nat')); $d.appendChild(f2); rest=w.imgs.slice(1) }
@@ -579,7 +597,7 @@ function showWork(idx,start){
     b.onclick=function(){var on=mo.classList.toggle('on');b.textContent=on?'− 詳細を閉じる':'+ 詳細を開く';b.setAttribute('aria-expanded',on)};
     head.querySelector('.tags').appendChild(b); head.appendChild(mo);
   }
-  if(w.side){ var sw=document.createElement('div'); sw.className='col top'; var gr=document.createElement('div'); gr.className='sidewrap'; gr.appendChild(sideMedia); gr.appendChild(head); sw.appendChild(gr); $d.appendChild(sw) }
+  if(w.side){ var sw=document.createElement('div'); sw.className='col top'; var gr=document.createElement('div'); gr.className='sidewrap'+(w.stage&&w.yt.length>1?' multi':''); gr.appendChild(sideMedia); gr.appendChild(head); sw.appendChild(gr); $d.appendChild(sw) }
   else $d.appendChild(head);
   if(rest.length){
     var r=document.createElement('div'); r.className='col rest';
