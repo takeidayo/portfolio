@@ -33,17 +33,20 @@
   --stage-bg:#e9e9ec;                           /* 縦動画を置く「灰色の台」の色 */
 
   /* ── バナー（いちばん上の 武井優空 / works / about / contact） ──
-     ▼ 見た目を2通りから選べます ▼
-     【いまの設定＝反転】バナーの背景は無し。文字だけが、後ろが白なら黒・黒なら白に自動で変わる。
-       --header-blend:difference; --header-text:#ffffff; --header-alpha-top:0; --header-blur:0px;
-     【前の設定＝半透明の背景】黒文字のまま、背景を白くして読ませる。
-       --header-blend:normal; --header-text:#1d1d1f; --header-alpha-top:.9; --header-blur:12px;
+     ▼ バナーは3通りから選べます（下の数字を書き換える） ▼
+     【いまの設定＝全部白】背景は真っ白、文字は黒。
+       --header-alpha-top:1; --header-alpha-bottom:1; --header-blur:0px;
+     【半透明で下に向かって消える】
+       --header-alpha-top:.9; --header-alpha-bottom:0; --header-fade-start:35%; --header-blur:12px;
+     【文字だけ反転】背景なし、後ろが白なら黒・黒なら白の文字に自動で変わる。
+       --header-blend:difference; --header-text:#ffffff; --header-alpha-top:0; --header-alpha-bottom:0; --header-blur:0px;
   */
-  --header-blend:difference;                    /* バナー文字の色の切り替え方。difference=後ろが白なら黒文字・後ろが黒なら白文字に自動で反転。normal=反転しない（下の --header-text の色のまま） */
-  --header-text:#ffffff;                        /* バナー文字の色。difference のときは白(#ffffff)のままにする（反転で黒く見える）。normal にするなら #1d1d1f など */
-  --header-alpha-top:0;                         /* バナーの「上端」の不透明度。0=完全に透明 1=真っ白。反転(difference)のときは 0 にする */
-  --header-alpha-bottom:0;                      /* バナーの「下端」の不透明度。0=完全に透明。上から下へ、この2つの数字のあいだで徐々に変わる。反転(difference)のときは 0 */
-  --header-blur:0px;                            /* バナーの後ろをぼかす強さ。0px でぼかさない。反転(difference)のときは 0px にする */
+  --header-blend:normal;                        /* バナー文字の色の切り替え方。normal=反転しない（下の --header-text の色のまま）。difference=後ろが白なら黒・黒なら白に自動反転（色が変に見えることがある） */
+  --header-text:#1d1d1f;                        /* バナー文字の色。通常は黒に近い #1d1d1f。difference にするときは白 #ffffff */
+  --header-alpha-top:1;                         /* バナーの「上端」の不透明度。0=完全に透明 1=真っ白。上端と下端を同じ数字にすると、全体が同じ濃さの背景になる */
+  --header-alpha-bottom:1;                      /* バナーの「下端」の不透明度。0=完全に透明 1=真っ白。1 にすると下まで真っ白（いまの設定）。0 にすると下に向かって透明になる */
+  --header-fade-start:100%;                     /* バナーが下に向かって消え始める位置。100%=消えない（下まで同じ）。40% にすると上から4割のところから消え始める */
+  --header-blur:0px;                            /* バナーの後ろをぼかす強さ。0px でぼかさない。半透明にするときだけ 10px 前後にする */
   --header-h:56px;                              /* バナーの高さ */
   --logo-size:17px;                             /* 「武井 優空」の文字の大きさ */
   --logo-weight:600;                            /* 「武井 優空」の太さ（400=ふつう 600=太い 700=もっと太い） */
@@ -152,11 +155,12 @@
     --stage-bg:#e9e9ec;                           /* 縦動画を置く「灰色の台」の色 */
 
     /* ── バナー（いちばん上の 武井優空 / works / about / contact） ── */
-    --header-blend:difference;                    /* バナー文字の色の切り替え方。difference=後ろが白なら黒文字・後ろが黒なら白文字に自動で反転。normal=反転しない（下の --header-text の色のまま） */
-    --header-text:#ffffff;                        /* バナー文字の色。difference のときは白(#ffffff)のままにする（反転で黒く見える）。normal にするなら #1d1d1f など */
-    --header-alpha-top:0;                         /* バナーの「上端」の不透明度。0=完全に透明 1=真っ白。反転(difference)のときは 0 にする */
-    --header-alpha-bottom:0;                      /* バナーの「下端」の不透明度。0=完全に透明。上から下へ、この2つの数字のあいだで徐々に変わる。反転(difference)のときは 0 */
-    --header-blur:0px;                            /* バナーの後ろをぼかす強さ。0px でぼかさない。反転(difference)のときは 0px にする */
+    --header-blend:normal;                        /* バナー文字の色の切り替え方。normal=反転しない（下の --header-text の色のまま）。difference=後ろが白なら黒・黒なら白に自動反転（色が変に見えることがある） */
+    --header-text:#1d1d1f;                        /* バナー文字の色。通常は黒に近い #1d1d1f。difference にするときは白 #ffffff */
+    --header-alpha-top:1;                         /* バナーの「上端」の不透明度。0=完全に透明 1=真っ白。上端と下端を同じ数字にすると、全体が同じ濃さの背景になる */
+    --header-alpha-bottom:1;                      /* バナーの「下端」の不透明度。0=完全に透明 1=真っ白。1 にすると下まで真っ白（いまの設定）。0 にすると下に向かって透明になる */
+    --header-fade-start:100%;                     /* バナーが下に向かって消え始める位置。100%=消えない（下まで同じ）。40% にすると上から4割のところから消え始める */
+    --header-blur:0px;                            /* バナーの後ろをぼかす強さ。0px でぼかさない。半透明にするときだけ 10px 前後にする */
     --header-h:52px;                              /* バナーの高さ */
     --logo-size:15px;                             /* 「武井 優空」の文字の大きさ */
     --logo-weight:600;                            /* 「武井 優空」の太さ（400=ふつう 600=太い 700=もっと太い） */
@@ -272,7 +276,7 @@ button{font:inherit}
 .in{max-width:1320px;margin:0 auto;padding-left:var(--page-side);padding-right:var(--page-side)}
 
 header{position:sticky;top:0;z-index:10;color:var(--header-text);mix-blend-mode:var(--header-blend)}
-header::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(to bottom,rgba(255,255,255,var(--header-alpha-top)),rgba(255,255,255,var(--header-alpha-bottom)));-webkit-backdrop-filter:blur(var(--header-blur));backdrop-filter:blur(var(--header-blur));-webkit-mask-image:linear-gradient(to bottom,#000 35%,transparent);mask-image:linear-gradient(to bottom,#000 35%,transparent)}
+header::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(to bottom,rgba(255,255,255,var(--header-alpha-top)),rgba(255,255,255,var(--header-alpha-bottom)));-webkit-backdrop-filter:blur(var(--header-blur));backdrop-filter:blur(var(--header-blur));-webkit-mask-image:linear-gradient(to bottom,#000 var(--header-fade-start),transparent);mask-image:linear-gradient(to bottom,#000 var(--header-fade-start),transparent)}
 .bar{display:flex;align-items:center;justify-content:space-between;height:var(--header-h)}
 .name{font-size:var(--logo-size);font-weight:var(--logo-weight);letter-spacing:-.01em;display:flex;align-items:center;gap:10px}
 .name span{font-size:20px;font-weight:400}
