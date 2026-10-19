@@ -528,8 +528,11 @@ WORKS.forEach(function(w,i){
 /* 詳細：横型の動画 */
 /* 動画の入れ方：videos フォルダに mp4 があればそれを再生し、無ければYouTubeを表示 */
 function fill(el,file,id,label,auto,poster){
-  var v=document.createElement('video'); v.controls=!!auto; v.playsInline=true; v.preload='metadata'; v.setAttribute('aria-label',label);
-  if(poster) v.poster=poster;
+  var v=document.createElement('video'); v.controls=!!auto; v.playsInline=true; v.preload='auto'; v.setAttribute('aria-label',label);
+  /* サムネ(一覧用の画像)は動画の代わりに出さない：読み込み中は背景色のまま、1コマ目が出たら静かに表示 */
+  v.style.opacity='0'; v.style.transition='opacity .25s';
+  var shown=function(){ v.style.opacity='1' };
+  v.addEventListener('loadeddata',shown); v.addEventListener('playing',shown);
   if(auto) v.autoplay=true;
   v.onerror=function(){ el.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+id+'?rel=0'+(auto?'&autoplay=1':'')+'" title="'+label+'" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>' };
   v.src=file+'#t=0.1'; el.innerHTML=''; el.appendChild(v);
