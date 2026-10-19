@@ -450,8 +450,8 @@ footer a{color:var(--ink)}
    desc  : 詳細ページの説明文（'…' の中を書き換える。改行は不要）
    tags  : 分類タブ。 ['Film'] / ['Film','Graphic'] のようにカンマで増やせる
    more  : 「+ 詳細を開く」で出るリンク。 {t:'表示する文字', u:'リンク先URL'}。要らなければ行ごと消す
-   thumbs: 一覧のサムネ画像。先頭の 'images/○○.jpg' を自分の画像に置き換える
-   imgs  : 詳細ページに縦に並べる画像（製氷枡・滑り道など）。 images フォルダに入れた名前を書く
+   thumbs: 一覧のサムネ画像。THUMB_DIR+'○○.jpg' の ○○ を自分の画像の名前にする（thumbs フォルダ内）
+   imgs  : 詳細ページに縦に並べる画像（製氷枡・滑り道など）。 works フォルダに入れた名前を書く（WORK_DIR+'名前.jpg'）
    yt    : YouTubeのID。縦型は {id:'…',v:1} と書く
    --- 以下は特別な表示にしたいときだけ ---
    stage    : true なら複数の動画を灰色の台で切り替える表示（矢印と点で移動）
@@ -460,22 +460,28 @@ footer a{color:var(--ink)}
    side     : true なら詳細ページで「縦動画を左、文章を右」に並べる（スマホは動画の下に文章）。
               この単語を消すと、灰色の台に縦動画を置く従来の配置に戻る
    ========================================================================== */
+/* ★ 画像・映像を入れるフォルダの名前（GitHubのフォルダ名を変えたらここも同じに）★
+   THUMB_DIR : サムネ（一覧に出る小さい画像／動画の再生前の表紙）を入れるフォルダ
+   WORK_DIR  : 作品の本体（映像 mp4・詳細ページに並ぶ静止画）を入れるフォルダ
+   最後の / を消さないこと */
+var THUMB_DIR='thumbs/';
+var WORK_DIR='works/';
 var YT=function(id){return ['https://i.ytimg.com/vi/'+id+'/maxresdefault.jpg','https://i.ytimg.com/vi/'+id+'/hqdefault.jpg']};
 var WORKS=[
- {id:'kamon',tags:['Film'],title:'紋の拍動',thumbs:['images/kamon.jpg'].concat(YT('KuNj9hDmbv4')),yt:['KuNj9hDmbv4'],
+ {id:'kamon',tags:['Film'],title:'紋の拍動',thumbs:[THUMB_DIR+'kamon.jpg'].concat(YT('KuNj9hDmbv4')),yt:['KuNj9hDmbv4'],
   desc:'家紋の魅力を「構造美」という視点から再解釈した映像作品。家紋を構成する円の大きさに音階と色を対応させ、描かれる過程そのものを視覚と音楽で表現しました。説明するのではなく、体験として美しさを伝えることを目指しています。',
   more:[{t:'スライド資料を見る',u:'https://app.notion.com/p/3abf11d2bbc881ada44fc77e52061bc8'}]},
- {id:'wait',tags:['Film'],title:'少々お待ちください',thumbs:['images/wait.jpg'].concat(YT('pvjiZf0boLU')),vertical:true,yt:[{id:'pvjiZf0boLU',v:1}],
+ {id:'wait',tags:['Film'],title:'少々お待ちください',thumbs:[THUMB_DIR+'wait.jpg'].concat(YT('pvjiZf0boLU')),vertical:true,yt:[{id:'pvjiZf0boLU',v:1}],
   desc:'「20年後のディストピアとは」がテーマ。高速通信で加速した人々の体感速度は、その反動もまた大きくなる。広告や読み込み画面など、誰もが経験する待ち時間を起点に未来を描きました。'},
  {id:'anime',tags:['Animation'],title:'自主制作アニメ',tri:true,stage:true,
   yt:[{id:'LvcPt6-EepM',v:1},{id:'-zzhnsR7fpo',v:1},{id:'19V8c5Xz9HE'}],
   desc:'実写の日常映像にiPadで手描きの動物を合成するオリジナル手法。「日常の見方を変えれば、毎日が楽しくなる」をテーマに、3作品をYouTubeで公開しています。多くの実写×アニメ手法が足元を映さないなか、あえて動く背景に合わせて歩かせることに踏み込みました。'},
- {id:'keshiki',tags:['Film'],title:'景色を走る',thumbs:['images/keshiki.jpg'].concat(YT('SICQc_n1YVA')),yt:['SICQc_n1YVA'],
+ {id:'keshiki',tags:['Film'],title:'景色を走る',thumbs:[THUMB_DIR+'keshiki.jpg'].concat(YT('SICQc_n1YVA')),yt:['SICQc_n1YVA'],
   desc:'「日常のつまらないを楽しくするには」がテーマ。車窓をフレームに、風景を障害物に見立て、横スクロールゲームの要領で頭の中に道筋を描く遊びを提案しました。'},
- {id:'seihyo',tags:['Product'],title:'製氷枡',thumbs:['images/seihyo-1.jpg'],
-  imgs:['images/seihyo-1.jpg','images/seihyo-2.jpg','images/seihyo-3.jpg','images/seihyo-4.jpg'],desc:''},
- {id:'suberi',tags:['Product'],title:'滑り道',thumbs:['images/suberi-1.jpg'],
-  imgs:['images/suberi-1.jpg','images/suberi-2.jpg','images/suberi-3.jpg','images/suberi-4.jpg'],desc:''}
+ {id:'seihyo',tags:['Product'],title:'製氷枡',thumbs:[THUMB_DIR+'seihyo.jpg'],
+  imgs:[WORK_DIR+'seihyo-1.jpg',WORK_DIR+'seihyo-2.jpg',WORK_DIR+'seihyo-3.jpg',WORK_DIR+'seihyo-4.jpg'],desc:''},
+ {id:'suberi',tags:['Product'],title:'滑り道',thumbs:[THUMB_DIR+'suberi.jpg'],
+  imgs:[WORK_DIR+'suberi-1.jpg',WORK_DIR+'suberi-2.jpg',WORK_DIR+'suberi-3.jpg',WORK_DIR+'suberi-4.jpg'],desc:''}
 ];
 
 /* ===== 以下は表示の仕組み ===== */
@@ -500,7 +506,7 @@ function norm(y){return typeof y==='string'?{id:y}:y}
 function cardThumb(w,i){
   if(w.tri){
     var box=document.createElement('div'); box.className='thumb tri';
-    w.yt.forEach(function(y,k){ var c=img(ytSrcs(y.id,'images/'+w.id+'-'+(k+1)+'.jpg'),'',''); c.dataset.i=k; box.appendChild(c) });
+    w.yt.forEach(function(y,k){ var c=img(ytSrcs(y.id,THUMB_DIR+w.id+'-'+(k+1)+'.jpg'),'',''); c.dataset.i=k; box.appendChild(c) });
     return box;
   }
   if(w.vertical) return img(w.thumbs,w.title,'','vfit');
@@ -529,7 +535,7 @@ function fill(el,file,id,label,auto,poster){
     v.addEventListener('play',function(){v.controls=true;b.remove()}); el.appendChild(b);
   }
 }
-function ytBox(w){ var d=document.createElement('div'); d.className='yt'; fill(d,'videos/'+w.id+'.mp4',w.yt[0],w.title,false,'images/'+w.id+'.jpg'); return d }
+function ytBox(w){ var d=document.createElement('div'); d.className='yt'; fill(d,WORK_DIR+w.id+'.mp4',w.yt[0],w.title,false,THUMB_DIR+w.id+'.jpg'); return d }
 /* 詳細：縦型を含む動画。背景は動画のぼかし。余白の矢印・下の点・キー・スワイプで移動 */
 var STAGE=null;
 var ARW={p:'<svg viewBox="0 0 16 28" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="butt" stroke-linejoin="miter"><path vector-effect="non-scaling-stroke" d="M15 .5 1 14l14 13.5"/></svg>',
@@ -551,7 +557,7 @@ function buildStage(w,start,side){
   function show(i,auto){
     cur=((i%n)+n)%n; var y=items[cur];
     box.className='sbox '+(y.v?'v':'h');
-    fill(box,y.file||('videos/'+w.id+(n>1?'-'+(cur+1):'')+'.mp4'),y.id,w.title+' '+(cur+1),auto,'images/'+w.id+(n>1?'-'+(cur+1):'')+'.jpg');
+    fill(box,y.file||(WORK_DIR+w.id+(n>1?'-'+(cur+1):'')+'.mp4'),y.id,w.title+' '+(cur+1),auto,THUMB_DIR+w.id+(n>1?'-'+(cur+1):'')+'.jpg');
     dots.forEach(function(d,k){d.classList.toggle('on',k===cur)});
   }
   function step(d){show(cur+d,true)}
@@ -582,7 +588,7 @@ function showWork(idx,start){
   var rest=[];
   var sideMedia=null;
   if(w.side&&w.stage&&w.yt.length>1){ sideMedia=buildStage(w,start,true) }
-  else if(w.side){ sideMedia=document.createElement('div'); sideMedia.className='sidemedia'; var y0=norm(w.yt[0]); fill(sideMedia,'videos/'+w.id+'.mp4',y0.id,w.title,false,'images/'+w.id+'.jpg') }
+  else if(w.side){ sideMedia=document.createElement('div'); sideMedia.className='sidemedia'; var y0=norm(w.yt[0]); fill(sideMedia,WORK_DIR+w.id+'.mp4',y0.id,w.title,false,THUMB_DIR+w.id+'.jpg') }
   else if(w.stage||w.vertical){ $d.appendChild(buildStage(w,start)) }
   else if(w.yt){ var fb=document.createElement('div'); fb.className='col top'; fb.appendChild(ytBox(w)); $d.appendChild(fb) }
   else if(w.imgs){ var f2=document.createElement('div'); f2.className='col top'; f2.appendChild(img([w.imgs[0]],'画像 1',w.title,'nat')); $d.appendChild(f2); rest=w.imgs.slice(1) }
