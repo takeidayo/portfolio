@@ -103,12 +103,11 @@
   /* ── 映像の再生ボタン（再生前に映像の中央に出る丸いボタン） ── */
   --play-size:68px;                             /* 再生ボタンの大きさ */
   --play-bg:rgba(0,0,0,.72);                    /* 再生ボタンの黒丸の色。rgba(0,0,0,.72)=黒・透明度72%。最後の数字を1にすると真っ黒 */
-  --play-ring:1.5px solid rgba(255,255,255,.35);/* 黒丸のふち。黒い映像の上でも丸が見えるようにする。要らなければ 0 solid transparent */
 
   /* ── 縦動画のための灰色の台（自主制作アニメ） ── */
   --stage-h:min(560px,78svh);                   /* 灰色の台の高さ。min(A,B) は「AとBの小さいほう」 */
-  --arrow-w:22px;                               /* 左右の矢印「＜ ＞」の横幅（細い山形） */
-  --arrow-h:44px;                               /* 左右の矢印の縦の長さ。映像に対して大きすぎたら小さくする */
+  --arrow-w:16px;                               /* 左右の矢印「＜ ＞」の横幅。縦の長さとの比が 16:28 だと HARA と同じ形になる */
+  --arrow-h:28px;                               /* 左右の矢印の縦の長さ。映像に対して大きすぎたら小さくする（横幅も同じ割合で小さく） */
   --arrow-edge:36px;                            /* 矢印と、灰色の台の左右の端とのあいだ（大きくすると内側へ寄る） */
   --dots-top:14px;                              /* 灰色の台と、下の点（棒）とのあいだ。小さいほど近づく */
   --dot-w:24px;                                 /* 点の幅（選んでいない動画） */
@@ -215,12 +214,11 @@
     /* ── 映像の再生ボタン（再生前に映像の中央に出る丸いボタン） ── */
     --play-size:56px;                             /* 再生ボタンの大きさ */
     --play-bg:rgba(0,0,0,.72);                    /* 再生ボタンの黒丸の色。rgba(0,0,0,.72)=黒・透明度72%。最後の数字を1にすると真っ黒 */
-    --play-ring:1.5px solid rgba(255,255,255,.35);/* 黒丸のふち。黒い映像の上でも丸が見えるようにする。要らなければ 0 solid transparent */
 
     /* ── 縦動画のための灰色の台（自主制作アニメ） ── */
     --stage-h:min(70svh,520px);                   /* 灰色の台の高さ。min(A,B) は「AとBの小さいほう」 */
-    --arrow-w:14px;                               /* 左右の矢印「＜ ＞」の横幅（細い山形） */
-    --arrow-h:30px;                               /* 左右の矢印の縦の長さ。映像に対して大きすぎたら小さくする */
+    --arrow-w:12px;                               /* 左右の矢印「＜ ＞」の横幅。縦の長さとの比が 16:28 だと HARA と同じ形になる */
+    --arrow-h:21px;                               /* 左右の矢印の縦の長さ。映像に対して大きすぎたら小さくする（横幅も同じ割合で小さく） */
     --arrow-edge:8px;                             /* 矢印と、灰色の台の左右の端とのあいだ（大きくすると内側へ寄る） */
     --dots-top:14px;                              /* 灰色の台と、下の点（棒）とのあいだ。小さいほど近づく */
     --dot-w:24px;                                 /* 点の幅（選んでいない動画） */
@@ -305,7 +303,8 @@ header::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:no
 .yt iframe,.sbox iframe,.yt video,.sbox video,.sidemedia video,.sidemedia iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 .yt video,.sbox video,.sidemedia video{object-fit:contain;background:#000}
 /* 再生前の丸い再生ボタン */
-.playbtn{position:absolute;left:50%;top:50%;width:var(--play-size);height:var(--play-size);margin:calc(var(--play-size)/-2) 0 0 calc(var(--play-size)/-2);border-radius:50%;background:var(--play-bg);border:var(--play-ring);color:#fff;display:grid;place-items:center;cursor:pointer;z-index:2;transition:transform .2s}
+.playbtn{position:absolute;left:50%;top:50%;width:var(--play-size);height:var(--play-size);margin:calc(var(--play-size)/-2) 0 0 calc(var(--play-size)/-2);border-radius:50%;background:var(--play-bg);border:0;-webkit-tap-highlight-color:transparent;color:#fff;display:grid;place-items:center;cursor:pointer;z-index:2;transition:transform .2s}
+.yt video::-webkit-media-controls-start-playback-button,.sbox video::-webkit-media-controls-start-playback-button,.sidemedia video::-webkit-media-controls-start-playback-button{display:none!important;-webkit-appearance:none}
 .playbtn:hover{transform:scale(1.07)}
 .playbtn svg{width:38%;height:38%;margin-left:6%}
 .nat{aspect-ratio:auto;background:none}
@@ -487,7 +486,7 @@ WORKS.forEach(function(w,i){
 /* 詳細：横型の動画 */
 /* 動画の入れ方：videos フォルダに mp4 があればそれを再生し、無ければYouTubeを表示 */
 function fill(el,file,id,label,auto,poster){
-  var v=document.createElement('video'); v.controls=true; v.playsInline=true; v.preload='metadata'; v.setAttribute('aria-label',label);
+  var v=document.createElement('video'); v.controls=!!auto; v.playsInline=true; v.preload='metadata'; v.setAttribute('aria-label',label);
   if(poster) v.poster=poster;
   if(auto) v.autoplay=true;
   v.onerror=function(){ el.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+id+'?rel=0'+(auto?'&autoplay=1':'')+'" title="'+label+'" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>' };
@@ -496,14 +495,14 @@ function fill(el,file,id,label,auto,poster){
     var b=document.createElement('button'); b.className='playbtn'; b.setAttribute('aria-label','再生');
     b.innerHTML='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 3.5v17l14-8.5z"/></svg>';
     b.onclick=function(e){e.stopPropagation(); v.play()};
-    v.addEventListener('play',function(){b.remove()}); el.appendChild(b);
+    v.addEventListener('play',function(){v.controls=true;b.remove()}); el.appendChild(b);
   }
 }
 function ytBox(w){ var d=document.createElement('div'); d.className='yt'; fill(d,'videos/'+w.id+'.mp4',w.yt[0],w.title,false,'images/'+w.id+'.jpg'); return d }
 /* 詳細：縦型を含む動画。背景は動画のぼかし。余白の矢印・下の点・キー・スワイプで移動 */
 var STAGE=null;
-var ARW={p:'<svg viewBox="0 0 24 48" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path vector-effect="non-scaling-stroke" d="M20 2 4 24l16 22"/></svg>',
-         n:'<svg viewBox="0 0 24 48" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path vector-effect="non-scaling-stroke" d="M4 2l16 22L4 46"/></svg>'};
+var ARW={p:'<svg viewBox="0 0 16 28" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="butt" stroke-linejoin="miter"><path vector-effect="non-scaling-stroke" d="M15 .5 1 14l14 13.5"/></svg>',
+         n:'<svg viewBox="0 0 16 28" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="butt" stroke-linejoin="miter"><path vector-effect="non-scaling-stroke" d="M1 .5 15 14 1 27.5"/></svg>'};
 function buildStage(w,start){
   var items=w.yt.map(norm),n=items.length,cur=0,dots=[];
   var wrap=document.createElement('div'); wrap.className='col top';
