@@ -113,8 +113,8 @@
   --footer-size:13px;                           /* フッターの文字の大きさ */
 
   /* ── 映像の再生ボタン（再生前に映像の中央に出る丸いボタン） ── */
-  --play-size:68px;                             /* 再生ボタンの大きさ */
-  --play-bg:rgba(0,0,0,.72);                    /* 再生ボタンの黒丸の色。rgba(0,0,0,.72)=黒・透明度72%。最後の数字を1にすると真っ黒 */
+  --play-size:72px;                             /* 再生ボタン(黒丸)の直径。72px=YouTubeと同じ。▶も一緒に拡大縮小する */
+  --play-bg:rgba(0,0,0,.32);                    /* 再生ボタンの黒丸の色。rgba(0,0,0,.32)=黒を32%の濃さで重ねる(YouTubeと同じ)。最後の数字を1にすると真っ黒、0で透明 */
 
   /* ── 縦動画のための灰色の台（自主制作アニメ） ── */
   --stage-h:min(560px,78svh);                   /* 灰色の台の高さ。min(A,B) は「AとBの小さいほう」 */
@@ -231,8 +231,8 @@
     --footer-size:13px;                           /* フッターの文字の大きさ */
 
     /* ── 映像の再生ボタン（再生前に映像の中央に出る丸いボタン） ── */
-    --play-size:56px;                             /* 再生ボタンの大きさ */
-    --play-bg:rgba(0,0,0,.72);                    /* 再生ボタンの黒丸の色。rgba(0,0,0,.72)=黒・透明度72%。最後の数字を1にすると真っ黒 */
+    --play-size:72px;                             /* 再生ボタン(黒丸)の直径。72px=YouTubeと同じ。▶も一緒に拡大縮小する */
+    --play-bg:rgba(0,0,0,.32);                    /* 再生ボタンの黒丸の色。rgba(0,0,0,.32)=黒を32%の濃さで重ねる(YouTubeと同じ)。最後の数字を1にすると真っ黒、0で透明 */
 
     /* ── 縦動画のための灰色の台（自主制作アニメ） ── */
     --stage-h:min(70svh,520px);                   /* 灰色の台の高さ。min(A,B) は「AとBの小さいほう」 */
@@ -332,7 +332,7 @@ header::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:no
 .playbtn{position:absolute;left:50%;top:50%;width:var(--play-size);height:var(--play-size);margin:calc(var(--play-size)/-2) 0 0 calc(var(--play-size)/-2);border-radius:50%;background:var(--play-bg);border:0;-webkit-tap-highlight-color:transparent;color:#fff;display:grid;place-items:center;cursor:pointer;z-index:2;transition:transform .2s}
 .yt video::-webkit-media-controls-start-playback-button,.sbox video::-webkit-media-controls-start-playback-button,.sidemedia video::-webkit-media-controls-start-playback-button{display:none!important;-webkit-appearance:none}
 .playbtn:hover{transform:scale(1.07)}
-.playbtn svg{width:38%;height:38%;margin-left:6%}
+.playbtn svg{width:100%;height:100%;display:block}
 .nat{aspect-ratio:auto;background:none}
 .nat img{height:auto}
 .nat.ph{aspect-ratio:16/9;background:var(--card)}
@@ -538,7 +538,7 @@ function fill(el,file,id,label,auto,poster){
   v.src=file+'#t=0.1'; el.innerHTML=''; el.appendChild(v);
   if(!auto){ /* 再生前だけ出る丸い再生ボタン */
     var b=document.createElement('button'); b.className='playbtn'; b.setAttribute('aria-label','再生');
-    b.innerHTML='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 3.5v17l14-8.5z"/></svg>';
+    b.innerHTML='<svg viewBox="0 0 72 72" fill="currentColor" stroke="currentColor" stroke-width="3.0" stroke-linejoin="round"><path d="M22.93,19.99 L53.70,36.00 L22.93,52.01Z"/></svg>'; /* YouTubeの再生ボタンと同じ形・位置 */
     b.onclick=function(e){e.stopPropagation(); v.play()};
     v.addEventListener('play',function(){v.controls=true;b.remove()}); el.appendChild(b);
   }
