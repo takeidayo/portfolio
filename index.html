@@ -467,7 +467,7 @@ footer a{color:var(--ink)}
               この単語を消すと、灰色の台に縦動画を置く従来の配置に戻る
    ========================================================================== */
 /* ★ 画像・映像を入れるフォルダの名前（GitHubのフォルダ名を変えたらここも同じに）★
-   THUMB_DIR : サムネ（一覧に出る小さい画像／動画の再生前の表紙）を入れるフォルダ
+   THUMB_DIR : サムネ（一覧に出る画像）を入れるフォルダ。名前の一覧はリポジトリの README.md を見る
    WORK_DIR  : 作品の本体（映像 mp4・詳細ページに並ぶ静止画）を入れるフォルダ
    最後の / を消さないこと */
 var THUMB_DIR='thumbs/';
@@ -527,7 +527,7 @@ WORKS.forEach(function(w,i){
 
 
 /* 詳細：横型の動画 */
-/* 動画の入れ方：videos フォルダに mp4 があればそれを再生し、無ければYouTubeを表示 */
+/* 動画の入れ方：works フォルダに mp4 があればそれを再生し、無ければYouTubeを表示 */
 function fill(el,file,id,label,auto,poster){
   var v=document.createElement('video'); v.controls=!!auto; v.playsInline=true; v.preload='auto'; v.setAttribute('aria-label',label);
   /* サムネ(一覧用の画像)は動画の代わりに出さない：読み込み中は背景色のまま、1コマ目が出たらすぐ表示(ふわっとさせない) */
