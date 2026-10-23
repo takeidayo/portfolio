@@ -113,7 +113,8 @@
   --footer-size:13px;                           /* フッターの文字の大きさ */
 
   /* ── 映像の再生ボタン（再生前に映像の中央に出る丸いボタン） ── */
-  --play-size:60px;                             /* 再生ボタン(黒丸)の直径。72px=YouTubeと同じ。▶も一緒に拡大縮小する */
+  --play-size:72px;                             /* 再生ボタン(黒丸)の直径。72px=YouTubeと同じ。▶も一緒に拡大縮小する */
+  --play-icon:1;                                /* ▶だけの大きさ(黒丸の大きさは変わらない)。1=YouTubeと同じ、1.2=2割大きく、0.8=2割小さく */
   --play-bg:rgba(0,0,0,.32);                    /* 再生ボタンの黒丸の色。rgba(0,0,0,.32)=黒を32%の濃さで重ねる(YouTubeと同じ)。最後の数字を1にすると真っ黒、0で透明 */
 
   /* ── 縦動画のための灰色の台（自主制作アニメ） ── */
@@ -231,7 +232,8 @@
     --footer-size:13px;                           /* フッターの文字の大きさ */
 
     /* ── 映像の再生ボタン（再生前に映像の中央に出る丸いボタン） ── */
-    --play-size:50px;                             /* 再生ボタン(黒丸)の直径。72px=YouTubeと同じ。▶も一緒に拡大縮小する */
+    --play-size:72px;                             /* 再生ボタン(黒丸)の直径。72px=YouTubeと同じ。▶も一緒に拡大縮小する */
+    --play-icon:1;                                /* ▶だけの大きさ(黒丸の大きさは変わらない)。1=YouTubeと同じ、1.2=2割大きく、0.8=2割小さく */
     --play-bg:rgba(0,0,0,.32);                    /* 再生ボタンの黒丸の色。rgba(0,0,0,.32)=黒を32%の濃さで重ねる(YouTubeと同じ)。最後の数字を1にすると真っ黒、0で透明 */
 
     /* ── 縦動画のための灰色の台（自主制作アニメ） ── */
@@ -332,7 +334,7 @@ header::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:no
 .playbtn{position:absolute;left:50%;top:50%;width:var(--play-size);height:var(--play-size);margin:calc(var(--play-size)/-2) 0 0 calc(var(--play-size)/-2);border-radius:50%;background:var(--play-bg);border:0;-webkit-tap-highlight-color:transparent;color:#fff;display:grid;place-items:center;cursor:pointer;z-index:2;transition:transform .2s}
 .yt video::-webkit-media-controls-start-playback-button,.sbox video::-webkit-media-controls-start-playback-button,.sidemedia video::-webkit-media-controls-start-playback-button{display:none!important;-webkit-appearance:none}
 .playbtn:hover{transform:scale(1.07)}
-.playbtn svg{width:100%;height:100%;display:block}
+.playbtn svg{width:100%;height:100%;display:block;transform:scale(var(--play-icon,1))}
 .nat{aspect-ratio:auto;background:none}
 .nat img{height:auto}
 .nat.ph{aspect-ratio:16/9;background:var(--card)}
@@ -482,8 +484,9 @@ var WORKS=[
  {id:'anime',tags:['Animation'],title:'自主制作アニメ',tri:true,stage:true,
   yt:[{id:'LvcPt6-EepM',v:1},{id:'-zzhnsR7fpo',v:1},{id:'19V8c5Xz9HE'}],
   desc:'実写の日常映像にiPadで手描きの動物を合成するオリジナル手法。「日常の見方を変えれば、毎日が楽しくなる」をテーマに、3作品をYouTubeで公開しています。多くの実写×アニメ手法が足元を映さないなか、あえて動く背景に合わせて歩かせることに踏み込みました。'},
- {id:'keshiki',tags:['Film'],title:'景色を走る',thumbs:[THUMB_DIR+'keshiki.jpg'].concat(YT('SICQc_n1YVA')),yt:['SICQc_n1YVA'],
-  desc:'「日常のつまらないを楽しくするには」がテーマ。車窓をフレームに、風景を障害物に見立て、横スクロールゲームの要領で頭の中に道筋を描く遊びを提案しました。'},
+ {id:'machi',tags:['Service Design'],title:'まちレシート',thumbs:[THUMB_DIR+'machi.jpg'],
+  imgs:[WORK_DIR+'machi-1.jpg',WORK_DIR+'machi-2.jpg',WORK_DIR+'machi-3.jpg',WORK_DIR+'machi-4.jpg',WORK_DIR+'machi-5.jpg'],
+  desc:'レシートに、その店がある町の地図を刷る提案。何を買ったか、いつ来たかに「どこにいたか」が加わり、旅人には町の思い出に、住人には暮らしの実感になります。'},
  {id:'seihyo',tags:['Product'],title:'製氷枡',thumbs:[THUMB_DIR+'seihyo.jpg'],
   imgs:[WORK_DIR+'seihyo-1.jpg',WORK_DIR+'seihyo-2.jpg',WORK_DIR+'seihyo-3.jpg',WORK_DIR+'seihyo-4.jpg'],desc:''},
  {id:'suberi',tags:['Product'],title:'滑り道',thumbs:[THUMB_DIR+'suberi.jpg'],
